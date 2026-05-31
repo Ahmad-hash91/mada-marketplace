@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+enum Role {
+  BUYER
+  SELLER
+  ADMIN
+}
+model User {
+  id            Int      @id @default(autoincrement())
+  first_name    String   @db.VarChar(50)
+  last_name     String   @db.VarChar(50)
+  email         String   @db.VarChar(100) @unique
+  phone         String   @db.VarChar(25)
+  password      String
+  role          Role     @default(BUYER)
+  status        Boolean  @default(true)
+  created_at    DateTime @default(now())
+  store         Store?
+  orders        Order[]
+  subscription  Subscription?
+  @@map("users")
+}
+model Store {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String    @unique
+  description String?
+  logo        String?
+  products    Product[]
+  orders      Order[]
+  status      Boolean   @default(false)
+  created_at  DateTime  @default(now())
+  @@map("stores")
+}
+model Product {
+  id          Int       @id @default(autoincrement())
+  storeId     Int
+  store       Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  categoryId  Int
+  category    Category  @relation(fields: [categoryId], references: [id])
+  name        String
+  slug        String    @unique
+  description String?
+  price       Float
+  stock       Int
+  status      Boolean   @default(true)
+  images      ProductImage[]
+  orderItems  OrderItem[]
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  @@map("products")
+}
+model Category{
+  id          Int       @id @default(autoincrement())
+  name        String
+  name_ar     String?
+  slug        String    @unique
+  products    Product[]
+  created_at  DateTime  @default(now())
+  @@map("categories")
+}  
+model ProductImage{
+id          Int       @id @default(autoincrement())
+url         String
+productId   Int
+product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade) 
+sort_order  Int       @default(0)
+created_at  DateTime  @default(now())
+@@map("product_images")
+}
+model Order {
+  id               Int         @id @default(autoincrement())
+  buyerId          Int
+  buyer            User        @relation(fields: [buyerId], references: [id], onDelete: Restrict)
+  storeId          Int
+  store            Store       @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  status           OrderStatus @default(PENDING)
+  total_amount     Float
+  delivery_address String
+  notes            String?
+  items            OrderItem[]
+  created_at       DateTime    @default(now())
+  updated_at       DateTime    @updatedAt
+  @@map("orders")
+}
+
+model OrderItem {
+  id                Int      @id @default(autoincrement())
+  orderId           Int
+  order             Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId         Int
+  product           Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  quantity          Int
+  price_at_purchase Float
+  @@map("order_items")
+}
+
+model Subscription {
+  id         Int                @id @default(autoincrement())
+  userId     Int                @unique
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status     SubscriptionStatus @default(ACTIVE)
+  amount     Float
+  starts_at  DateTime
+  expires_at DateTime
+  created_at DateTime           @default(now())
+  @@map("subscriptions")
+}
