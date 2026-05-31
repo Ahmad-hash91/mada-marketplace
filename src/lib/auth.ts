@@ -1,3 +1,4 @@
+import "server-only";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
