@@ -16,7 +16,7 @@ export const userAuthSchema = z.object({
     .max(50, { message: "First Name cannot exceed 50 characters." }),
   last_name: z
     .string()
-    .min(5, { message: "Last Name must be at least 5 characters long." })
+    .min(2, { message: "Last Name must be at least 2 characters long." })
     .max(50, { message: "Last Name cannot exceed 50 characters." }),
   email: z
     .string()
