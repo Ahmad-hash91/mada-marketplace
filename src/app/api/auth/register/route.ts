@@ -27,8 +27,9 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
+    const data = parsedUserInput.data;
     const existingPhone = await db.user.findFirst({
-      where: { phone },
+      where: { phone: data.phone },
     });
     if (existingPhone) {
       return NextResponse.json(
@@ -37,7 +38,7 @@ export async function POST(request: Request) {
       );
     }
     const existingEmail = await db.user.findUnique({
-      where: { email },
+      where: { email: data.email },
     });
     if (existingEmail) {
       return NextResponse.json(
@@ -46,7 +47,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const data = parsedUserInput.data;
     const hashedPassword = await hashPassword(data.password);
     // Add user to DB, allowing email to be optional
     const newUser = await db.user.create({
