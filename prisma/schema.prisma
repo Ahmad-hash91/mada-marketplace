@@ -34,7 +34,7 @@ model User {
   id            Int      @id @default(autoincrement())
   first_name    String   @db.VarChar(50)
   last_name     String   @db.VarChar(50)
-  email         String   @db.VarChar(100) @unique
+  email         String?   @db.VarChar(100) @unique
   phone         String   @db.VarChar(25)
   password      String
   role          Role     @default(BUYER)

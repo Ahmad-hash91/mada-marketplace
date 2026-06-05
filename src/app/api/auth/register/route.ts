@@ -46,16 +46,21 @@ export async function POST(request: Request) {
       );
     }
 
-    // Add user to DB
-    const hashedPassword = await hashPassword(parsedUserInput.data.password);
+    const data = parsedUserInput.data;
+    const hashedPassword = await hashPassword(data.password);
+    // Add user to DB, allowing email to be optional
     const newUser = await db.user.create({
       data: {
-        ...parsedUserInput.data,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        phone: data.phone,
+        role: data.role,
         password: hashedPassword,
+        ...(data.email && { email: data.email }),
       },
     });
     const userId = newUser.id;
-    const accessToken = generateAccessToken(userId, parsedUserInput.data.role);
+    const accessToken = generateAccessToken(userId, data.role);
     const refreshToken = generateRefreshToken(userId);
     await setAuthCookies(accessToken, refreshToken);
     return NextResponse.json(
