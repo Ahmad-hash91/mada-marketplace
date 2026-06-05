@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import createMiddleware from "next-intl/middleware";
+import { routing } from "@/i18n/routing";
+
+const intlMiddleware = createMiddleware(routing);
 
 function decodeTokenHandler(token: string) {
   try {
@@ -15,19 +19,29 @@ function decodeTokenHandler(token: string) {
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value;
-
   const payload = token ? decodeTokenHandler(token) : null;
-  //Checking if payload is expired
+
   if (payload && payload.exp * 1000 < Date.now()) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
   const currentPath = request.nextUrl.pathname;
-  const isAdminRoute = currentPath.startsWith("/admin");
-  const isSellerRoute = currentPath.startsWith("/seller");
+
+  // Let next-intl handle root and locale routes first
+  if (currentPath === "/" || /^\/(en|ar|ja)/.test(currentPath)) {
+    return intlMiddleware(request);
+  }
+
+  // Strip locale prefix to check the real path
+  const pathWithoutLocale = currentPath.replace(/^\/(en|ar|ja)/, "") || "/";
+
+  const isAdminRoute = pathWithoutLocale.startsWith("/admin");
+  const isSellerRoute = pathWithoutLocale.startsWith("/seller");
   const isBuyerRoute =
-    currentPath.startsWith("/orders") || currentPath.startsWith("/cart");
-  const isLoginRoute = currentPath.startsWith("/login");
-  const isRegisterRoute = currentPath.startsWith("/register");
+    pathWithoutLocale.startsWith("/orders") ||
+    pathWithoutLocale.startsWith("/cart");
+  const isLoginRoute = pathWithoutLocale.startsWith("/login");
+  const isRegisterRoute = pathWithoutLocale.startsWith("/register");
 
   if (isAdminRoute && payload?.role !== "ADMIN") {
     return NextResponse.redirect(new URL("/", request.url));
@@ -39,17 +53,20 @@ export function middleware(request: NextRequest) {
   ) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  if (isBuyerRoute && !payload?.role) {
+  if (isBuyerRoute && !payload) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
   if ((isLoginRoute || isRegisterRoute) && payload) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  return NextResponse.next();
+  return intlMiddleware(request);
 }
+
 export const config = {
   matcher: [
+    "/",
+    "/(en|ar|ja)/:path*",
     "/admin/:path*",
     "/seller/:path*",
     "/cart",
