@@ -33,7 +33,6 @@ export default function RegisterBuyer() {
   const password = watch("password");
 
   const onSubmit = async (data: RegisterFormInput) => {
-    console.log("Form submitted", data);
     setLoading(true);
     setServerError("");
     try {
@@ -56,11 +55,7 @@ export default function RegisterBuyer() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit, (errors) =>
-        console.log("Validation errors:", errors),
-      )}
-    >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col items-center gap-4">
         <div className="flex flex-row gap-4">
           <div className="flex flex-col items-start">
@@ -127,11 +122,7 @@ export default function RegisterBuyer() {
         </div>
         {serverError && <p className="text-red-500">{serverError}</p>}
         <div className="border rounded-lg">
-          <button
-            onClick={() => console.log("button clicked")}
-            type="submit"
-            disabled={loading}
-          >
+          <button type="submit" disabled={loading}>
             {loading ? "Registering..." : "Register"}
           </button>
         </div>
