@@ -15,6 +15,10 @@ if (globalForPrisma.prisma) {
 } else {
   const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+      // Allows the driver to bypass local self-signed certificate chain drops
+      rejectUnauthorized: false,
+    },
   });
   const adapter = new PrismaPg(pool);
   db = new PrismaClient({ adapter });

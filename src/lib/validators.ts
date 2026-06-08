@@ -1,4 +1,4 @@
-import z from "zod";
+import z from "zod/v4";
 
 // Syrian Regular Expressions
 const syrianIntlRegex = /^\+9639[1-689]\d{7}$/;
@@ -46,10 +46,10 @@ const emailSchema = z
   .string()
   .trim()
   .toLowerCase()
-  .pipe(z.email({ message: "Invalid email address format." }))
-  .optional();
-
-//register Auth Schema
+  .optional()
+  .refine((val) => !val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
+    message: "Invalid email address format.",
+  });
 export const userAuthSchema = z.object({
   first_name: z
     .string()
@@ -62,7 +62,7 @@ export const userAuthSchema = z.object({
   email: emailSchema,
   phone: phoneSchema,
   password: passwordSchema,
-  role: z.enum(["BUYER", "SELLER"]),
+  role: z.union([z.literal("BUYER"), z.literal("SELLER")]),
 });
 // Login Auth Schema
 export const loginSchema = z.object({

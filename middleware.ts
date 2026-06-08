@@ -27,11 +27,6 @@ export function middleware(request: NextRequest) {
 
   const currentPath = request.nextUrl.pathname;
 
-  // Let next-intl handle root and locale routes first
-  if (currentPath === "/" || /^\/(en|ar|ja)/.test(currentPath)) {
-    return intlMiddleware(request);
-  }
-
   // Strip locale prefix to check the real path
   const pathWithoutLocale = currentPath.replace(/^\/(en|ar|ja)/, "") || "/";
 
