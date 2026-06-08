@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod/v4";
-import Link from "next/link";
 
 const registerFormSchema = userAuthSchema.extend({
   confirm_password: z.string().min(1, "Please confirm your password"),
@@ -40,14 +39,14 @@ export default function RegisterBuyer() {
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, role: "BUYER" }),
+        body: JSON.stringify({ ...data, role: "SELLER" }),
       });
       const result = await response.json();
       if (!response.ok) {
         setServerError(result.error || "Something went wrong.");
         return;
       }
-      router.push("/en");
+      router.push("/en/seller/dashboard");
     } catch {
       setServerError("Something went wrong. Please try again.");
     } finally {
@@ -127,20 +126,6 @@ export default function RegisterBuyer() {
             {loading ? "Registering..." : "Register"}
           </button>
         </div>
-      </div>
-      <div className="flex flex-col items-center gap-2 text-sm">
-        <p>
-          Want to sell on Mada?{" "}
-          <Link href="/en/register/seller" className="text-blue-500 underline">
-            Register as a Seller
-          </Link>
-        </p>
-        <p>
-          Already have an account?{" "}
-          <Link href="/en/login" className="text-blue-500 underline">
-            Login
-          </Link>
-        </p>
       </div>
     </form>
   );
