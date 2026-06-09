@@ -22,14 +22,18 @@ export function comparePassword(
   return bcrypt.compare(password, storedHash);
 }
 
-export function generateAccessToken(id: number, role: string): string {
+export function generateAccessToken(
+  id: number,
+  role: string,
+  storeId?: number,
+): string {
   if (!JWT_SECRET) {
     throw new Error("JWT SECRET is undefined.");
   }
   if (!id || !role) {
     throw new Error("Id and role are required");
   }
-  return jsonwebtoken.sign({ id, role }, JWT_SECRET, {
+  return jsonwebtoken.sign({ id, role, storeId }, JWT_SECRET, {
     expiresIn: "15m",
     algorithm: "HS256",
   });

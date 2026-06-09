@@ -57,6 +57,7 @@ model Store {
   slug        String    @unique
   description String?
   logo        String?
+  location    String?
   products    Product[]
   orders      Order[]
   views       StoreView[]
