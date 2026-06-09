@@ -37,12 +37,16 @@ model User {
   email         String?   @db.VarChar(100) @unique
   phone         String   @db.VarChar(25)
   password      String
+  location      String?
   role          Role     @default(BUYER)
   status        Boolean  @default(true)
   created_at    DateTime @default(now())
   store         Store?
-  orders        Order[]
   subscription  Subscription?
+  orders        Order[]
+  storeViews    StoreView[]
+  productViews  ProductView[]
+  reviews       Review[]
   @@map("users")
 }
 model Store {
@@ -55,6 +59,7 @@ model Store {
   logo        String?
   products    Product[]
   orders      Order[]
+  views       StoreView[]
   status      Boolean   @default(false)
   created_at  DateTime  @default(now())
   @@map("stores")
@@ -73,6 +78,8 @@ model Product {
   status      Boolean   @default(true)
   images      ProductImage[]
   orderItems  OrderItem[]
+  views       ProductView[]
+  reviews     Review[]
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
   @@map("products")
@@ -106,6 +113,7 @@ model Order {
   delivery_address String
   notes            String?
   items            OrderItem[]
+  reviews          Review[]
   created_at       DateTime    @default(now())
   updated_at       DateTime    @updatedAt
   @@map("orders")
@@ -132,4 +140,44 @@ model Subscription {
   expires_at DateTime
   created_at DateTime           @default(now())
   @@map("subscriptions")
+}
+
+model StoreView {
+  id        Int               @id @default(autoincrement())
+  user      User              @relation(fields:[userId],references:[id])
+  userId    Int
+  storeId   Int               
+  store     Store             @relation(fields:[storeId],references:[id])
+  date      DateTime 
+  count     Int
+  @@unique([storeId, date])
+  @@map("storeview")
+}
+
+model ProductView{
+  id        Int               @id @default(autoincrement())
+  userId    Int
+  user      User              @relation(fields:[userId],references:[id])
+  productId Int
+  product   Product           @relation(fields:[productId],references:[id])
+  date      DateTime
+  count     Int
+  @@unique([productId, date])
+  @@map("productview")
+}
+
+model Review{
+id          Int              @id @default(autoincrement())
+userId      Int
+user        User             @relation(fields:[userId],references:[id])
+productId   Int
+product     Product          @relation(fields:[productId],references:[id])
+orderId     Int
+order       Order            @relation(fields:[orderId],references:[id])
+message    String
+rating     Int 
+created_at  DateTime         @default(now())
+updated_at  DateTime         @updatedAt 
+@@unique([userId, productId, orderId])
+@@map("review")
 }
