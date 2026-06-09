@@ -71,5 +71,14 @@ export const loginSchema = z.object({
   password: passwordSchema,
 });
 
+export const sellerStoreSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "Store name must be at least 2 characters long." })
+    .max(50, { message: "Store name cannot exceed 50 characters." }),
+  description: z.string().optional(),
+  location: z.string().optional(),
+});
+export type CreateStore = z.infer<typeof sellerStoreSchema>;
 export type UserAuthInput = z.infer<typeof userAuthSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
