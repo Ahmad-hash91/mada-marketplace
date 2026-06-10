@@ -1,3 +1,4 @@
+import { DashboardSideBar } from "@/app/components/seller/dashboard/Sidebar";
 import { verifyToken } from "@/lib/auth";
 import db from "@/lib/db";
 import { cookies } from "next/headers";
@@ -31,5 +32,9 @@ export default async function SellerDashboard() {
   }
 
   // match show dashboard here
-  return <></>;
+  return (
+    <>
+      <DashboardSideBar storeName={sellerStore.name} />
+    </>
+  );
 }

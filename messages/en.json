@@ -1,5 +1,20 @@
 {
   "HomePage": {
     "title": "Welcome to Mada Marketplace"
+  },
+  "SellerDashboard": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "orders": "Orders",
+      "products": "Products",
+      "customers": "Customers",
+      "StorePage": "public store page",
+      "analytics": "Analytics",
+      "settings": "Settings",
+      "account": "Account",
+      "billing": "Billing",
+      "notifications": "Notifications",
+      "faqHelp": "FAQ / Help"
+    }
   }
 }

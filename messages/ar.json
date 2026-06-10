@@ -1,5 +1,20 @@
 {
   "HomePage": {
     "title": "مرحباً بكم في مدى ماركت"
+  },
+  "SellerDashboard": {
+    "sidebar": {
+      "dashboard": "لوحة المعلومات",
+      "orders": "الطلبات",
+      "products": "المنتجات",
+      "customers": "العملاء",
+      "StorePage": "صفحة المتجر العامة",
+      "analytics": "التحليلات",
+      "settings": "الإعدادات",
+      "account": "الحساب",
+      "billing": "الفواتير",
+      "notifications": "الإشعارات",
+      "faqHelp": "الأسئلة الشائعة"
+    }
   }
 }

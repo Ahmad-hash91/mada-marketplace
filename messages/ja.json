@@ -1,5 +1,20 @@
 {
   "HomePage": {
     "title": "Madaマーケットプレイスへようこそ"
+  },
+  "SellerDashboard": {
+    "sidebar": {
+      "dashboard": "ダッシュボード",
+      "orders": "注文",
+      "products": "商品",
+      "customers": "顧客",
+      "StorePage": "公開ストアページ",
+      "analytics": "分析",
+      "settings": "設定",
+      "account": "アカウント情報",
+      "billing": "お支払い・請求",
+      "notifications": "通知設定",
+      "faqHelp": "ヘルプ・よくある質問"
+    }
   }
 }
