@@ -6,6 +6,7 @@ import { PanelLeftClose, PanelLeftOpen, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { sideBarNavItems, sideBarSettingsItems } from "./SideBarData";
+import { LanguageSwitcher } from "../../shared/LanguageSwitcher";
 
 interface DashboardSideBarProps {
   storeName: string;
@@ -15,11 +16,12 @@ export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const pathname = usePathname();
+
   const t = useTranslations("SellerDashboard.sidebar");
 
   return (
     <aside
-      className={`h-screen flex flex-col transition-all duration-300 border-r border-gray-200 bg-white ${
+      className={`h-screen flex flex-col transition-all duration-300 border-e border-gray-200 bg-white ${
         isExpanded ? "w-64" : "w-16"
       }`}
     >
@@ -43,7 +45,6 @@ export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
       </div>
 
       <nav className="flex flex-col gap-1 p-2 flex-1 overflow-y-auto">
-        {/* 1. Main Nav Loop (Stays locked to the top) */}
         {sideBarNavItems.map((data) => {
           const isActive = pathname === data.path;
           return (
@@ -67,15 +68,14 @@ export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
             </Link>
           );
         })}
+      </nav>
 
+      <div className="mt-auto flex flex-col gap-2 p-2 border-t border-gray-100 bg-white shrink-0 w-full">
         {sideBarSettingsItems.map((parent) => {
           const isParentActive = pathname === parent.path;
 
           return (
-            <div
-              key={parent.titleKey}
-              className="flex flex-col gap-1 mt-auto border-t border-gray-100 pt-3 shrink-0 w-full"
-            >
+            <div key={parent.titleKey} className="flex flex-col gap-1 w-full">
               <div className="relative flex items-center w-full group">
                 <Link
                   href={parent.path}
@@ -139,7 +139,12 @@ export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
             </div>
           );
         })}
-      </nav>
+        {isExpanded && (
+          <div className="pt-2 border-t border-gray-100 w-full">
+            <LanguageSwitcher />
+          </div>
+        )}
+      </div>
     </aside>
   );
 }
