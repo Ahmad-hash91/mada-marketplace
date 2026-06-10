@@ -13,7 +13,7 @@ const registerFormSchema = userAuthSchema.extend({
 
 type RegisterFormInput = z.infer<typeof registerFormSchema>;
 
-export default function RegisterBuyer() {
+export default function RegisterSeller() {
   const router = useRouter();
   const [serverError, setServerError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +26,7 @@ export default function RegisterBuyer() {
   } = useForm<RegisterFormInput>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      role: "BUYER",
+      role: "SELLER",
     },
   });
 
