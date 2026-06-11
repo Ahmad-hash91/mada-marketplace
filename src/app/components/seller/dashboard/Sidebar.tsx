@@ -1,23 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { PanelLeftClose, PanelLeftOpen, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { sideBarNavItems, sideBarSettingsItems } from "./SideBarData";
 import { LanguageSwitcher } from "../../shared/LanguageSwitcher";
+import { sideBarNavItems, sideBarSettingsItems } from "./SideBarData";
+import { useState } from "react";
+import {
+  PanelLeftClose,
+  PanelLeftOpen,
+  ChevronDown,
+  Globe,
+} from "lucide-react";
 
 interface DashboardSideBarProps {
   storeName: string;
+  storeSlug: string;
 }
 
-export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
+export function DashboardSideBar({
+  storeName,
+  storeSlug,
+}: DashboardSideBarProps) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const pathname = usePathname();
-
   const t = useTranslations("SellerDashboard.sidebar");
+
+  const pathWithoutLocale = pathname.replace(/^\/(en|ar|ja)/, "");
 
   return (
     <aside
@@ -46,11 +56,13 @@ export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
 
       <nav className="flex flex-col gap-1 p-2 flex-1 overflow-y-auto">
         {sideBarNavItems.map((data) => {
-          const isActive = pathname === data.path;
+          const itemPathWithoutLocale = data.path.replace(/^\/(en|ar|ja)/, "");
+          const isActive = pathWithoutLocale === itemPathWithoutLocale;
           return (
             <Link
               key={data.titleKey}
               href={data.path}
+              title={t(data.titleKey)}
               className={`flex items-center gap-4 p-2 rounded transition-colors ${
                 isActive
                   ? "bg-gray-100 font-medium text-gray-900"
@@ -68,17 +80,33 @@ export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
             </Link>
           );
         })}
+        <Link
+          href={`/en/stores/${storeSlug}`}
+          title={t("StorePage")}
+          className="flex items-center gap-4 p-2 rounded transition-colors text-gray-600 hover:bg-gray-50"
+        >
+          <span className="text-xl shrink-0 text-gray-500">
+            <Globe className="size-5" />
+          </span>
+          {isExpanded && (
+            <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+              {t("StorePage")}
+            </span>
+          )}
+        </Link>
       </nav>
 
       <div className="mt-auto flex flex-col gap-2 p-2 border-t border-gray-100 bg-white shrink-0 w-full">
         {sideBarSettingsItems.map((parent) => {
-          const isParentActive = pathname === parent.path;
+          const isParentActive =
+            pathWithoutLocale === parent.path.replace(/^\/(en|ar|ja)/, "");
 
           return (
             <div key={parent.titleKey} className="flex flex-col gap-1 w-full">
               <div className="relative flex items-center w-full group">
                 <Link
                   href={parent.path}
+                  title={t(parent.titleKey)}
                   className={`flex items-center gap-4 p-2 w-full rounded transition-colors ltr:pr-10 rtl:pl-10 ${
                     isParentActive
                       ? "bg-gray-100 font-medium text-gray-900"
@@ -116,11 +144,14 @@ export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
               {isSettingsOpen &&
                 isExpanded &&
                 parent.children.map((child) => {
-                  const isChildActive = pathname === child.path;
+                  const isChildActive =
+                    pathWithoutLocale ===
+                    child.path.replace(/^\/(en|ar|ja)/, "");
                   return (
                     <Link
                       key={child.titleKey}
                       href={child.path}
+                      title={t(child.titleKey)}
                       className={`text-sm py-2 px-3 rounded transition-colors flex items-center gap-3 ltr:ml-4 rtl:mr-4 ${
                         isChildActive
                           ? "bg-blue-50 text-blue-600 font-medium"
@@ -139,10 +170,12 @@ export function DashboardSideBar({ storeName }: DashboardSideBarProps) {
             </div>
           );
         })}
-        {isExpanded && (
-          <div className="pt-2 border-t border-gray-100 w-full">
+        {isExpanded ? (
+          <div className="pt-2 border-t  border-gray-100 w-full">
             <LanguageSwitcher />
           </div>
+        ) : (
+          <Globe className="size-5 shrink-0 ltr:mx-2 rtl:mx-2 text-gray-500" />
         )}
       </div>
     </aside>

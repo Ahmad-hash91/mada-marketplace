@@ -3,7 +3,6 @@ import {
   ShoppingCart,
   Package,
   Users,
-  Globe,
   BarChart3,
   Settings,
   User,
@@ -17,7 +16,7 @@ interface SidebarItem {
   path: string;
   icon: React.ReactNode;
 }
-interface sideBarSettingsProps extends SidebarItem {
+interface SidebarSettingsItem extends SidebarItem {
   children: SidebarItem[];
 }
 
@@ -42,7 +41,6 @@ export const sideBarNavItems: SidebarItem[] = [
     path: "/en/seller/customers",
     icon: <Users className="size-5" />,
   },
-  { titleKey: "StorePage", path: "/store", icon: <Globe className="size-5" /> },
   {
     titleKey: "analytics",
     path: "/en/seller/analytics",
@@ -50,7 +48,7 @@ export const sideBarNavItems: SidebarItem[] = [
   },
 ];
 
-export const sideBarSettingsItems: sideBarSettingsProps[] = [
+export const sideBarSettingsItems: SidebarSettingsItem[] = [
   {
     titleKey: "settings",
     path: "/en/seller/settings",
@@ -58,7 +56,7 @@ export const sideBarSettingsItems: sideBarSettingsProps[] = [
     children: [
       {
         titleKey: "account",
-        path: "/settings/account",
+        path: "/en/seller/settings/account",
         icon: <User className="size-4" />,
       },
       {

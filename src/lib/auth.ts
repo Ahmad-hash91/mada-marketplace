@@ -93,3 +93,12 @@ export async function clearAuthCookies() {
   cookieStore.delete("access_token");
   cookieStore.delete("refresh_token");
 }
+
+export async function getSessionFromCookies() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("access_token")?.value;
+  if (!token) return null;
+  const payload = verifyToken(token, JWT_SECRET!);
+  if (!payload || !payload.exp || payload.exp * 1000 < Date.now()) return null;
+  return payload;
+}

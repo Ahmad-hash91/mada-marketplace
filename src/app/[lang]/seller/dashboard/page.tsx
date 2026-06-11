@@ -1,19 +1,7 @@
 import { DashboardSideBar } from "@/app/components/seller/dashboard/Sidebar";
-import { verifyToken } from "@/lib/auth";
+import { getSessionFromCookies } from "@/lib/auth";
 import db from "@/lib/db";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-const JWT_SECRET = process.env.JWT_SECRET!;
-
-export async function getSessionFromCookies() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("access_token")?.value;
-  if (!token) return null;
-  const payload = verifyToken(token, JWT_SECRET!);
-  if (!payload || !payload.exp || payload.exp * 1000 < Date.now()) return null;
-  return payload;
-}
 
 export default async function SellerDashboard() {
   const payload = await getSessionFromCookies();
@@ -34,7 +22,10 @@ export default async function SellerDashboard() {
   // match show dashboard here
   return (
     <>
-      <DashboardSideBar storeName={sellerStore.name} />
+      <DashboardSideBar
+        storeName={sellerStore.name}
+        storeSlug={sellerStore.slug}
+      />
     </>
   );
 }
