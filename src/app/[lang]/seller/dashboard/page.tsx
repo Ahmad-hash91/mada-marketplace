@@ -1,3 +1,3 @@
 export default async function SellerDashboard() {
-  return <></>;
+  return <div></div>;
 }
