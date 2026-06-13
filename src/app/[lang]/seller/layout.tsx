@@ -5,6 +5,8 @@ import { getSessionFromCookies } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
 import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
+import { TopBar } from "@/app/components/seller/dashboard/TopBar";
 
 export const metadata: Metadata = {
   title: "Seller Dashboard",
@@ -44,7 +46,9 @@ export default async function RootDashboardLayout({
         storeSlug={sellerStore.slug}
       />
       <div className="flex-1 flex flex-col overflow-y-auto p-6 ">
-        <TopBarSkeleton />
+        <Suspense fallback={<TopBarSkeleton />}>
+          <TopBar />
+        </Suspense>
         <main className="flex-1 p-6 border border-gray-200 rounded-b-2xl">
           {children}
         </main>
