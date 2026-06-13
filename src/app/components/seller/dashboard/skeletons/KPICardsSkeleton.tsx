@@ -1,4 +1,4 @@
-import { Skeleton } from "../../shared/Skeleton";
+import { Skeleton } from "../../../shared/Skeleton";
 
 export function KPICardsSkeleton() {
   return (

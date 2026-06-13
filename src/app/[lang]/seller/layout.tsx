@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { DashboardSideBar } from "@/app/components/seller/dashboard/Sidebar";
+import { TopBarSkeleton } from "@/app/components/seller/dashboard/skeletons/TopBarSkeleton";
 import { getSessionFromCookies } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
@@ -32,12 +33,17 @@ export default async function RootDashboardLayout({
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen ">
       <DashboardSideBar
         storeName={sellerStore.name}
         storeSlug={sellerStore.slug}
       />
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <div className="flex-1 flex flex-col overflow-y-auto p-6 ">
+        <TopBarSkeleton />
+        <main className="flex-1 p-6 border border-gray-200 rounded-b-2xl">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
