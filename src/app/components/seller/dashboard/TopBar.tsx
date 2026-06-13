@@ -4,6 +4,7 @@ import { Bell } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import SearchInputForm from "./SearchInputForm";
 
 export async function TopBar() {
   const t = await getTranslations("SellerDashboard.topBar");
@@ -25,14 +26,10 @@ export async function TopBar() {
 
   return (
     <div className="flex items-center justify-between p-4 border-t border-x rounded-t-2xl border-secondary bg-background">
-      <p className="h-6 w-24 text-text font-semibold">{t("title")}</p>
+      <p className="h-6 w-auto text-text font-semibold">{t("title")}</p>
 
       <div className="flex items-center gap-3">
-        <input
-          type="search"
-          placeholder={t("search")}
-          className="h-9 w-64 rounded-full border border-secondary px-4 text-sm focus:border-0 focus:outline-none focus:ring-2 focus:ring-primary/30"
-        />
+        <SearchInputForm />
         <Bell className="size-5" />
         {!storeLogo ? (
           <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold font-sans">

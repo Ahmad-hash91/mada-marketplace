@@ -1,12 +1,10 @@
 "use client";
-import { loginSchema } from "@/lib/validators";
+import { loginSchema, type LoginInput } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import z from "zod";
 
-type LoginFormInput = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const [serverError, setServerError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -15,11 +13,11 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormInput>({
+  } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginFormInput) => {
+  const onSubmit = async (data: LoginInput) => {
     setLoading(true);
     setServerError("");
     try {
