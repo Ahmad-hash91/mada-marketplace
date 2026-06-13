@@ -28,11 +28,11 @@ export async function TopBar() {
     <div className="flex items-center justify-between p-4 border-t border-x rounded-t-2xl border-secondary bg-background">
       <p className="h-6 w-auto text-text font-semibold">{t("title")}</p>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 shrink-0">
         <SearchInputForm />
-        <Bell className="size-5" />
+        <Bell className="size-5 shrink-0" />
         {!storeLogo ? (
-          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold font-sans">
+          <div className="h-8 w-8 shrink-0 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold font-sans">
             {initialLetter}
           </div>
         ) : (
@@ -40,7 +40,7 @@ export async function TopBar() {
             src={storeLogo}
             width={32}
             height={32}
-            className="h-8 w-8 rounded-full object-cover"
+            className="h-8 w-8 rounded-full object-cover shrink-0"
             alt={imageAlt ?? "store logo"}
           />
         )}
