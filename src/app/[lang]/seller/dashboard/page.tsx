@@ -5,8 +5,17 @@ import { TodayPerformanceSkeleton } from "@/app/components/seller/dashboard/skel
 import { LiveOrdersSkeleton } from "@/app/components/seller/dashboard/skeletons/LiveOrdersSkeleton";
 import { TopSellingSkeleton } from "@/app/components/seller/dashboard/skeletons/TopSellingSkeleton";
 import { RecentOrdersSkeleton } from "@/app/components/seller/dashboard/skeletons/RecentOrdersSkeleton";
+import { Suspense } from "react";
+import { AddProductCard } from "@/app/components/seller/dashboard/AddProductCard";
+import { setRequestLocale } from "next-intl/server";
 
-export default async function SellerDashboard() {
+export default async function SellerDashboard({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  setRequestLocale(lang);
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3 space-y-6">
@@ -16,7 +25,9 @@ export default async function SellerDashboard() {
       </div>
 
       <div className="space-y-6">
-        <AddProductSkeleton />
+        <Suspense fallback={<AddProductSkeleton />}>
+          <AddProductCard />
+        </Suspense>
         <TodayPerformanceSkeleton />
         <LiveOrdersSkeleton />
         <TopSellingSkeleton />

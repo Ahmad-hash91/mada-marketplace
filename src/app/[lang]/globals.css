@@ -1,8 +1,13 @@
 @import "tailwindcss";
-:root {
-  --primary: #0d7377;
-  --secondary: #f5e6d3;
-  --accent: #c9a84c;
-  --text: #1a1a2e;
-  --background: #fafafa;
+
+@theme {
+  --color-primary: #0d7377;
+  --color-secondary: #f5e6d3;
+  --color-accent: #c9a84c;
+  --color-text: #1a1a2e;
+  --color-background: #fafafa;
+
+  --font-sans: var(--inter-font), sans-serif;
+  --font-arabic: var(--noto-arabic-font), sans-serif;
+  --font-japanese: var(--noto-jp-font), sans-serif;
 }

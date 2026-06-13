@@ -15,6 +15,44 @@
       "billing": "الفواتير",
       "notifications": "الإشعارات",
       "faqHelp": "الأسئلة الشائعة"
+    },
+    "topBar": {
+      "search": "بحث",
+      "title": "لوحة المعلومات"
+    },
+    "addProduct": {
+      "label": "منتج جديد",
+      "button": "إضافة"
+    },
+    "kpi": {
+      "totalRevenue": "إجمالي الإيرادات",
+      "totalOrders": "إجمالي الطلبات",
+      "totalCustomers": "إجمالي العملاء",
+      "conversionRate": "معدل التحويل"
+    },
+    "todayPerformance": {
+      "title": "أداء اليوم",
+      "details": "التفاصيل",
+      "todaysRevenue": "إيرادات اليوم",
+      "yesterday": "الأمس"
+    },
+    "liveOrders": {
+      "title": "الطلبات الحالية"
+    },
+    "topSelling": {
+      "title": "الأكثر مبيعاً"
+    },
+    "recentOrders": {
+      "title": "الطلبات الأخيرة",
+      "orderId": "رقم الطلب",
+      "customer": "العميل",
+      "product": "المنتج",
+      "price": "السعر",
+      "status": "الحالة",
+      "action": "الإجراء"
+    },
+    "chart": {
+      "title": "نظرة عامة على الإيرادات"
     }
   }
 }

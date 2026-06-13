@@ -4,6 +4,7 @@ import { TopBarSkeleton } from "@/app/components/seller/dashboard/skeletons/TopB
 import { getSessionFromCookies } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
+import { setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Seller Dashboard",
@@ -12,11 +13,15 @@ export const metadata: Metadata = {
 
 type RootDashboardProps = {
   children: React.ReactNode;
+  params: Promise<{ lang: string }>;
 };
 
 export default async function RootDashboardLayout({
   children,
+  params,
 }: RootDashboardProps) {
+  const { lang } = await params;
+  setRequestLocale(lang);
   const payload = await getSessionFromCookies();
   if (!payload) redirect("/en/login");
   if (payload.role !== "SELLER") redirect("/en");

@@ -31,25 +31,25 @@ export function DashboardSideBar({
 
   return (
     <aside
-      className={`h-screen flex flex-col transition-all duration-300 border-e border-gray-200 bg-white ${
+      className={`h-screen flex flex-col transition-all duration-300 border-e border-secondary bg-background ${
         isExpanded ? "w-64" : "w-16"
       }`}
     >
       <div className="flex items-center justify-between p-4 h-16 shrink-0">
         {isExpanded && (
-          <span className="font-semibold whitespace-nowrap overflow-hidden text-ellipsis max-w-42.5">
+          <span className="font-semibold text-text whitespace-nowrap overflow-hidden text-ellipsis max-w-42.5">
             {storeName}
           </span>
         )}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="p-1 rounded hover:bg-gray-100 ltr:ml-auto rtl:mr-auto"
+          className="p-1 rounded hover:bg-secondary/50 ltr:ml-auto rtl:mr-auto"
           aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
         >
           {isExpanded ? (
-            <PanelLeftClose className="size-5" />
+            <PanelLeftClose className="size-5 text-text" />
           ) : (
-            <PanelLeftOpen className="size-5" />
+            <PanelLeftOpen className="size-5 text-text" />
           )}
         </button>
       </div>
@@ -65,13 +65,11 @@ export function DashboardSideBar({
               title={t(data.titleKey)}
               className={`flex items-center gap-4 p-2 rounded transition-colors ${
                 isActive
-                  ? "bg-gray-100 font-medium text-gray-900"
-                  : "text-gray-600 hover:bg-gray-50"
+                  ? "bg-primary/10 font-medium text-primary"
+                  : "text-text/70 hover:bg-secondary/40"
               }`}
             >
-              <span className="text-xl shrink-0 text-gray-500">
-                {data.icon}
-              </span>
+              <span className="text-xl shrink-0">{data.icon}</span>
               {isExpanded && (
                 <span className="whitespace-nowrap overflow-hidden text-ellipsis">
                   {t(data.titleKey)}
@@ -83,9 +81,9 @@ export function DashboardSideBar({
         <Link
           href={`/en/stores/${storeSlug}`}
           title={t("StorePage")}
-          className="flex items-center gap-4 p-2 rounded transition-colors text-gray-600 hover:bg-gray-50"
+          className="flex items-center gap-4 p-2 rounded transition-colors text-text/70 hover:bg-secondary/40"
         >
-          <span className="text-xl shrink-0 text-gray-500">
+          <span className="text-xl shrink-0">
             <Globe className="size-5" />
           </span>
           {isExpanded && (
@@ -96,7 +94,7 @@ export function DashboardSideBar({
         </Link>
       </nav>
 
-      <div className="mt-auto flex flex-col gap-2 p-2 border-t border-gray-100 bg-white shrink-0 w-full">
+      <div className="mt-auto flex flex-col gap-2 p-2 border-t border-secondary bg-background shrink-0 w-full">
         {sideBarSettingsItems.map((parent) => {
           const isParentActive =
             pathWithoutLocale === parent.path.replace(/^\/(en|ar|ja)/, "");
@@ -109,13 +107,11 @@ export function DashboardSideBar({
                   title={t(parent.titleKey)}
                   className={`flex items-center gap-4 p-2 w-full rounded transition-colors ltr:pr-10 rtl:pl-10 ${
                     isParentActive
-                      ? "bg-gray-100 font-medium text-gray-900"
-                      : "text-gray-600 hover:bg-gray-50"
+                      ? "bg-primary/10 font-medium text-primary"
+                      : "text-text/70 hover:bg-secondary/40"
                   }`}
                 >
-                  <span className="text-xl shrink-0 text-gray-500">
-                    {parent.icon}
-                  </span>
+                  <span className="text-xl shrink-0">{parent.icon}</span>
                   {isExpanded && (
                     <span className="whitespace-nowrap overflow-hidden text-ellipsis font-medium">
                       {t(parent.titleKey)}
@@ -129,7 +125,7 @@ export function DashboardSideBar({
                       e.preventDefault();
                       setIsSettingsOpen(!isSettingsOpen);
                     }}
-                    className="absolute p-1 rounded hover:bg-gray-200 text-gray-400 hover:text-gray-600 transition-colors ltr:right-2 rtl:left-2"
+                    className="absolute p-1 rounded hover:bg-secondary/60 text-text/40 hover:text-text/70 transition-colors ltr:right-2 rtl:left-2"
                     aria-label="Toggle settings menu"
                   >
                     <ChevronDown
@@ -154,11 +150,11 @@ export function DashboardSideBar({
                       title={t(child.titleKey)}
                       className={`text-sm py-2 px-3 rounded transition-colors flex items-center gap-3 ltr:ml-4 rtl:mr-4 ${
                         isChildActive
-                          ? "bg-blue-50 text-blue-600 font-medium"
-                          : "text-gray-600 hover:bg-gray-50"
+                          ? "bg-primary/10 text-primary font-medium"
+                          : "text-text/70 hover:bg-secondary/40"
                       }`}
                     >
-                      <span className="shrink-0 text-gray-400">
+                      <span className="shrink-0 text-text/40">
                         {child.icon}
                       </span>
                       <span className="whitespace-nowrap overflow-hidden text-ellipsis">
@@ -171,11 +167,11 @@ export function DashboardSideBar({
           );
         })}
         {isExpanded ? (
-          <div className="pt-2 border-t  border-gray-100 w-full">
+          <div className="pt-2 border-t border-secondary w-full">
             <LanguageSwitcher />
           </div>
         ) : (
-          <Globe className="size-5 shrink-0 ltr:mx-2 rtl:mx-2 text-gray-500" />
+          <Globe className="size-5 shrink-0 ltr:mx-2 rtl:mx-2 text-text/50" />
         )}
       </div>
     </aside>

@@ -15,6 +15,44 @@
       "billing": "お支払い・請求",
       "notifications": "通知設定",
       "faqHelp": "ヘルプ・よくある質問"
+    },
+    "topBar": {
+      "search": "検索",
+      "title": "ダッシュボード"
+    },
+    "addProduct": {
+      "label": "新商品",
+      "button": "追加"
+    },
+    "kpi": {
+      "totalRevenue": "総売上",
+      "totalOrders": "総注文数",
+      "totalCustomers": "総顧客数",
+      "conversionRate": "コンバージョン率"
+    },
+    "todayPerformance": {
+      "title": "本日の実績",
+      "details": "詳細",
+      "todaysRevenue": "本日の売上",
+      "yesterday": "昨日"
+    },
+    "liveOrders": {
+      "title": "最新の注文"
+    },
+    "topSelling": {
+      "title": "売れ筋商品"
+    },
+    "recentOrders": {
+      "title": "最近の注文",
+      "orderId": "注文ID",
+      "customer": "顧客",
+      "product": "商品",
+      "price": "価格",
+      "status": "状態",
+      "action": "操作"
+    },
+    "chart": {
+      "title": "売上概要"
     }
   }
 }

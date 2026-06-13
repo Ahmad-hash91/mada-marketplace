@@ -10,6 +10,20 @@ export const metadata: Metadata = {
   title: "Mada Marketplace | مدى",
   description: "Syria's Online Marketplace",
 };
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--inter-font",
+});
+
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--noto-arabic-font",
+});
+
+const notoSansJp = Noto_Sans_JP({
+  subsets: ["latin"],
+  variable: "--noto-jp-font",
+});
 
 type Props = {
   children: React.ReactNode;
@@ -30,7 +44,16 @@ export default async function RootLayout({ children, params }: Props) {
 
   return (
     <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"}>
-      <body suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${notoSansArabic.variable} ${notoSansJp.variable} ${
+          lang === "ar"
+            ? "font-arabic"
+            : lang === "ja"
+              ? "font-japanese"
+              : "font-sans"
+        }`}
+        suppressHydrationWarning
+      >
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

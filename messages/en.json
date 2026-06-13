@@ -8,13 +8,51 @@
       "orders": "Orders",
       "products": "Products",
       "customers": "Customers",
-      "StorePage": "public store page",
+      "StorePage": "Public Store Page",
       "analytics": "Analytics",
       "settings": "Settings",
       "account": "Account",
       "billing": "Billing",
       "notifications": "Notifications",
       "faqHelp": "FAQ / Help"
+    },
+    "topBar": {
+      "search": "Search",
+      "title": "Dashboard"
+    },
+    "addProduct": {
+      "label": "New Product",
+      "button": "Add"
+    },
+    "kpi": {
+      "totalRevenue": "Total Revenue",
+      "totalOrders": "Total Orders",
+      "totalCustomers": "Total Customers",
+      "conversionRate": "Conversion Rate"
+    },
+    "todayPerformance": {
+      "title": "Today's Performance",
+      "details": "Details",
+      "todaysRevenue": "Today's Revenue",
+      "yesterday": "Yesterday"
+    },
+    "liveOrders": {
+      "title": "Live Orders"
+    },
+    "topSelling": {
+      "title": "Top Selling Items"
+    },
+    "recentOrders": {
+      "title": "Recent Orders",
+      "orderId": "Order ID",
+      "customer": "Customer",
+      "product": "Product",
+      "price": "Price",
+      "status": "Status",
+      "action": "Action"
+    },
+    "chart": {
+      "title": "Revenue Overview"
     }
   }
 }
