@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { AddProductCard } from "@/app/components/seller/dashboard/AddProductCard";
 import { setRequestLocale } from "next-intl/server";
 import { KPICards } from "@/app/components/seller/dashboard/KPICards";
+import TodayPerformance from "@/app/components/seller/dashboard/TodayPerformance";
 
 export default async function SellerDashboard({
   params,
@@ -31,7 +32,9 @@ export default async function SellerDashboard({
         <Suspense fallback={<AddProductSkeleton />}>
           <AddProductCard />
         </Suspense>
-        <TodayPerformanceSkeleton />
+        <Suspense fallback={<TodayPerformanceSkeleton />}>
+          <TodayPerformance />
+        </Suspense>
         <LiveOrdersSkeleton />
         <TopSellingSkeleton />
       </div>

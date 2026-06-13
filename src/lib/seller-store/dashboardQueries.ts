@@ -1,6 +1,6 @@
 import db from "@/lib/db";
 
-export async function dashboardQueries(storeId: number) {
+export async function KPIQueries(storeId: number) {
   const totalRevenueResults = await db.order.aggregate({
     where: { storeId: storeId, status: "DELIVERED" },
     _sum: { total_amount: true },
@@ -27,5 +27,37 @@ export async function dashboardQueries(storeId: number) {
     totalOrders,
     totalCustomers,
     conversionRate,
+  };
+}
+
+export async function todaysPerformanceQueries(storeId: number) {
+  const now = new Date();
+  const startOfToday = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+  );
+  const startOfYesterday = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - 1,
+  );
+  const todayRevenueResult = await db.order.aggregate({
+    where: { created_at: { gte: startOfToday }, storeId, status: "DELIVERED" },
+    _sum: { total_amount: true },
+  });
+  const todayRevenue = todayRevenueResult._sum.total_amount || 0;
+  const yesterdayRevenueResult = await db.order.aggregate({
+    where: {
+      created_at: { gte: startOfYesterday, lt: startOfToday },
+      storeId,
+      status: "DELIVERED",
+    },
+    _sum: { total_amount: true },
+  });
+  const yesterdayRevenue = yesterdayRevenueResult._sum.total_amount || 0;
+  return {
+    todayRevenue,
+    yesterdayRevenue,
   };
 }

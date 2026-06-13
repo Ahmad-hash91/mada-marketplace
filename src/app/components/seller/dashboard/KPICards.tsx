@@ -1,6 +1,6 @@
 import { getSessionFromCookies } from "@/lib/auth";
 import db from "@/lib/db";
-import { dashboardQueries } from "@/lib/seller-store/dashboardQueries";
+import { KPIQueries } from "@/lib/seller-store/dashboardQueries";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -17,7 +17,7 @@ export async function KPICards() {
   if (!storeId) return null;
 
   const { totalCustomers, totalOrders, conversionRate, totalRevenue } =
-    await dashboardQueries(storeId);
+    await KPIQueries(storeId);
 
   return (
     <div className="grid grid-cols-4 gap-4">
