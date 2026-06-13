@@ -8,6 +8,7 @@ import { RecentOrdersSkeleton } from "@/app/components/seller/dashboard/skeleton
 import { Suspense } from "react";
 import { AddProductCard } from "@/app/components/seller/dashboard/AddProductCard";
 import { setRequestLocale } from "next-intl/server";
+import { KPICards } from "@/app/components/seller/dashboard/KPICards";
 
 export default async function SellerDashboard({
   params,
@@ -19,7 +20,9 @@ export default async function SellerDashboard({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3 space-y-6">
-        <KPICardsSkeleton />
+        <Suspense fallback={<KPICardsSkeleton />}>
+          <KPICards />
+        </Suspense>
         <ChartSkeleton />
         <RecentOrdersSkeleton />
       </div>
