@@ -34,11 +34,10 @@ export default async function RootDashboardLayout({
       status: true,
     },
   });
-  // redirect seller to create new store if no store found
-  if (!sellerStore) {
-    redirect("/en/seller/create-store");
-  }
 
+  if (!sellerStore) {
+    return <div className="min-h-screen">{children}</div>;
+  }
   return (
     <div className="flex h-screen ">
       <DashboardSideBar

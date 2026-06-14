@@ -1,30 +1,31 @@
 "use client";
-import { loginSchema, type LoginInput } from "@/lib/validators";
+
+import { CreateStore, sellerStoreSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 
-export default function LoginPage() {
-  const t = useTranslations("LoginPage");
+export default function CreateSellerStore() {
+  const router = useRouter();
+  const t = useTranslations("CreateStore");
   const [serverError, setServerError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<CreateStore>({
+    resolver: zodResolver(sellerStoreSchema),
   });
 
-  const onSubmit = async (data: LoginInput) => {
+  const onSubmit = async (data: CreateStore) => {
     setLoading(true);
     setServerError("");
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch("/api/stores", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data }),
@@ -34,13 +35,8 @@ export default function LoginPage() {
         setServerError(result.error || "Something went wrong.");
         return;
       }
-      if (result.role === "SELLER") {
-        router.push("/en/seller/dashboard");
-      } else if (result.role === "ADMIN") {
-        router.push("/en/admin/dashboard");
-      } else {
-        router.push("/en");
-      }
+      router.push("/en/seller/dashboard");
+      router.refresh();
     } catch {
       setServerError("Something went wrong. Please try again.");
     } finally {
@@ -65,47 +61,55 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="flex flex-col gap-1">
-            <label htmlFor="phone" className="text-sm font-medium text-text">
-              {t("phone")}
+            <label htmlFor="name" className="text-sm font-medium text-text">
+              {t("name")}
             </label>
             <input
-              {...register("phone")}
-              id="phone"
-              className={inputClass(!!errors.phone)}
+              {...register("name")}
+              id="name"
+              type="text"
+              autoComplete="name"
+              className={inputClass(!!errors.name)}
             />
-            {errors.phone && (
-              <p className="text-xs text-red-500">{errors.phone.message}</p>
+            {errors.name && (
+              <p className="text-xs text-red-500">{errors.name.message}</p>
             )}
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="text-sm font-medium text-text">
-              {t("email")} <span className="text-text/40">{t("optional")}</span>
+            <label
+              htmlFor="description"
+              className="text-sm font-medium text-text"
+            >
+              {t("description")}{" "}
+              <span className="text-text/40">{t("optional")}</span>
             </label>
             <input
-              {...register("email")}
-              id="email"
-              type="email"
-              autoComplete="email"
-              className={inputClass(!!errors.email)}
+              {...register("description")}
+              id="description"
+              type="text"
+              className={inputClass(!!errors.description)}
             />
-            {errors.email && (
-              <p className="text-xs text-red-500">{errors.email.message}</p>
+            {errors.description && (
+              <p className="text-xs text-red-500">
+                {errors.description.message}
+              </p>
             )}
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="text-sm font-medium text-text">
-              {t("password")}
+            <label htmlFor="location" className="text-sm font-medium text-text">
+              {t("location")}{" "}
+              <span className="text-text/40">{t("optional")}</span>
             </label>
             <input
-              {...register("password")}
-              id="password"
-              type="password"
-              className={inputClass(!!errors.password)}
+              {...register("location")}
+              id="location"
+              type="text"
+              className={inputClass(!!errors.location)}
             />
-            {errors.password && (
-              <p className="text-xs text-red-500">{errors.password.message}</p>
+            {errors.location && (
+              <p className="text-xs text-red-500">{errors.location.message}</p>
             )}
           </div>
 
@@ -121,18 +125,6 @@ export default function LoginPage() {
             {loading ? t("submitting") : t("submit")}
           </button>
         </form>
-
-        <div className="flex flex-col items-center gap-2 text-sm mt-6">
-          <p className="text-text/70">
-            {t("noAccount")}{" "}
-            <Link
-              href="/en/register"
-              className="text-primary font-medium hover:underline"
-            >
-              {t("registerLink")}
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );

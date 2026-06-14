@@ -1,6 +1,56 @@
 {
   "HomePage": {
-    "title": "مرحباً بكم في مدى ماركت"
+    "title": "مرحباً بكم في مدى ماركت",
+    "headline": "بيع واشترِ محلياً",
+    "subtext": "مدى يربط البائعين والمشترين في سوريا — بسيط، موثوق، ومصمم لمجتمعك.",
+    "getStarted": "ابدأ الآن",
+    "login": "تسجيل الدخول"
+  },
+  "RegisterBuyer": {
+    "title": "إنشاء حسابك",
+    "subtitle": "انضم إلى مدى ماركت كمشتري",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "phone": "رقم الهاتف",
+    "email": "البريد الإلكتروني",
+    "optional": "(اختياري)",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "submit": "تسجيل",
+    "submitting": "جاري التسجيل...",
+    "sellCta": "تريد البيع على مدى؟",
+    "sellLink": "التسجيل كبائع",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "loginLink": "تسجيل الدخول"
+  },
+  "RegisterSeller": {
+    "title": "كن بائعاً",
+    "subtitle": "افتح متجرك على مدى ماركت",
+    "submit": "إنشاء حساب بائع",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "loginLink": "تسجيل الدخول"
+  },
+  "LoginPage": {
+    "title": "مرحباً بعودتك",
+    "subtitle": "سجّل الدخول إلى حسابك في مدى",
+    "phone": "رقم الهاتف",
+    "email": "البريد الإلكتروني",
+    "optional": "(اختياري)",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "submitting": "جاري تسجيل الدخول...",
+    "noAccount": "ليس لديك حساب؟",
+    "registerLink": "تسجيل"
+  },
+  "CreateStore": {
+    "title": "إنشاء متجرك",
+    "subtitle": "أنشئ متجرك على مدى ماركت",
+    "name": "اسم المتجر",
+    "description": "الوصف",
+    "location": "الموقع",
+    "optional": "(اختياري)",
+    "submit": "إنشاء متجرك",
+    "submitting": "جاري إنشاء متجرك..."
   },
   "SellerDashboard": {
     "sidebar": {

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod/v4";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 const registerFormSchema = userAuthSchema.extend({
   confirm_password: z.string().min(1, "Please confirm your password"),
@@ -16,6 +17,7 @@ type RegisterFormInput = z.infer<typeof registerFormSchema>;
 
 export default function RegisterBuyer() {
   const router = useRouter();
+  const t = useTranslations("RegisterBuyer");
   const [serverError, setServerError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -55,93 +57,163 @@ export default function RegisterBuyer() {
     }
   };
 
+  const inputClass = (hasError: boolean) =>
+    `w-full rounded-lg border px-3 py-2 text-sm text-text bg-background focus:outline-none focus:ring-2 transition-colors ${
+      hasError
+        ? "border-red-400 focus:ring-red-200"
+        : "border-secondary focus:ring-primary/30 focus:border-primary"
+    }`;
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex flex-row gap-4">
-          <div className="flex flex-col items-start">
-            <label htmlFor="first_name">First Name</label>
-            <input
-              {...register("first_name")}
-              id="first_name"
-              className="border rounded-lg"
-            />
-            {errors.first_name && <p>{errors.first_name.message}</p>}
+    <div className="min-h-screen flex items-center justify-center bg-secondary/20 px-4 py-12">
+      <div className="w-full max-w-md bg-background border border-secondary rounded-2xl shadow-sm p-8">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold text-text">{t("title")}</h1>
+          <p className="text-sm text-text/60 mt-1">{t("subtitle")}</p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="flex gap-4">
+            <div className="flex-1 flex flex-col gap-1">
+              <label
+                htmlFor="first_name"
+                className="text-sm font-medium text-text"
+              >
+                {t("firstName")}
+              </label>
+              <input
+                {...register("first_name")}
+                id="first_name"
+                className={inputClass(!!errors.first_name)}
+              />
+              {errors.first_name && (
+                <p className="text-xs text-red-500">
+                  {errors.first_name.message}
+                </p>
+              )}
+            </div>
+            <div className="flex-1 flex flex-col gap-1">
+              <label
+                htmlFor="last_name"
+                className="text-sm font-medium text-text"
+              >
+                {t("lastName")}
+              </label>
+              <input
+                {...register("last_name")}
+                id="last_name"
+                className={inputClass(!!errors.last_name)}
+              />
+              {errors.last_name && (
+                <p className="text-xs text-red-500">
+                  {errors.last_name.message}
+                </p>
+              )}
+            </div>
           </div>
-          <div className="flex flex-col items-start">
-            <label htmlFor="last_name">Last Name</label>
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="phone" className="text-sm font-medium text-text">
+              {t("phone")}
+            </label>
             <input
-              {...register("last_name")}
-              id="last_name"
-              className="border rounded-lg"
+              {...register("phone")}
+              id="phone"
+              className={inputClass(!!errors.phone)}
             />
-            {errors.last_name && <p>{errors.last_name.message}</p>}
+            {errors.phone && (
+              <p className="text-xs text-red-500">{errors.phone.message}</p>
+            )}
           </div>
-        </div>
-        <div className="flex flex-col items-start">
-          <label htmlFor="phone">Phone Number</label>
-          <input
-            {...register("phone")}
-            id="phone"
-            className="border rounded-lg"
-          />
-          {errors.phone && <p>{errors.phone.message}</p>}
-        </div>
-        <div className="flex flex-col items-start">
-          <label htmlFor="email">Email (optional)</label>
-          <input
-            {...register("email")}
-            id="email"
-            type="email"
-            autoComplete="email"
-            className="border rounded-lg"
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-        <div className="flex flex-col items-start">
-          <label htmlFor="password">Password</label>
-          <input
-            {...register("password")}
-            id="password"
-            type="password"
-            className="border rounded-lg"
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
-        <div className="flex flex-col items-start">
-          <label htmlFor="confirm_password">Confirm Password</label>
-          <input
-            {...register("confirm_password", {
-              validate: (value) =>
-                value === password || "Passwords do not match",
-            })}
-            id="confirm_password"
-            type="password"
-            className="border rounded-lg"
-          />
-          {errors.confirm_password && <p>{errors.confirm_password.message}</p>}
-        </div>
-        {serverError && <p className="text-red-500">{serverError}</p>}
-        <div className="border rounded-lg">
-          <button type="submit" disabled={loading}>
-            {loading ? "Registering..." : "Register"}
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="email" className="text-sm font-medium text-text">
+              {t("email")} <span className="text-text/40">{t("optional")}</span>
+            </label>
+            <input
+              {...register("email")}
+              id="email"
+              type="email"
+              autoComplete="email"
+              className={inputClass(!!errors.email)}
+            />
+            {errors.email && (
+              <p className="text-xs text-red-500">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="password" className="text-sm font-medium text-text">
+              {t("password")}
+            </label>
+            <input
+              {...register("password")}
+              id="password"
+              type="password"
+              className={inputClass(!!errors.password)}
+            />
+            {errors.password && (
+              <p className="text-xs text-red-500">{errors.password.message}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="confirm_password"
+              className="text-sm font-medium text-text"
+            >
+              {t("confirmPassword")}
+            </label>
+            <input
+              {...register("confirm_password", {
+                validate: (value) =>
+                  value === password || "Passwords do not match",
+              })}
+              id="confirm_password"
+              type="password"
+              className={inputClass(!!errors.confirm_password)}
+            />
+            {errors.confirm_password && (
+              <p className="text-xs text-red-500">
+                {errors.confirm_password.message}
+              </p>
+            )}
+          </div>
+
+          {serverError && (
+            <p className="text-sm text-red-500 text-center">{serverError}</p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-primary text-white py-2.5 rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-60"
+          >
+            {loading ? t("submitting") : t("submit")}
           </button>
+        </form>
+
+        <div className="flex flex-col items-center gap-2 text-sm mt-6">
+          <p className="text-text/70">
+            {t("sellCta")}{" "}
+            <Link
+              href="/en/register/seller"
+              className="text-primary font-medium hover:underline"
+            >
+              {t("sellLink")}
+            </Link>
+          </p>
+          <p className="text-text/70">
+            {t("haveAccount")}{" "}
+            <Link
+              href="/en/login"
+              className="text-primary font-medium hover:underline"
+            >
+              {t("loginLink")}
+            </Link>
+          </p>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-2 text-sm">
-        <p>
-          Want to sell on Mada?{" "}
-          <Link href="/en/register/seller" className="text-blue-500 underline">
-            Register as a Seller
-          </Link>
-        </p>
-        <p>
-          Already have an account?{" "}
-          <Link href="/en/login" className="text-blue-500 underline">
-            Login
-          </Link>
-        </p>
-      </div>
-    </form>
+    </div>
   );
 }

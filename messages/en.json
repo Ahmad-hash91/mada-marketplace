@@ -1,6 +1,56 @@
 {
   "HomePage": {
-    "title": "Welcome to Mada Marketplace"
+    "title": "Welcome to Mada Marketplace",
+    "headline": "Buy and sell locally",
+    "subtext": "Mada connects buyers and sellers across Syria — simple, trusted, and built for your community.",
+    "getStarted": "Get Started",
+    "login": "Login"
+  },
+  "RegisterBuyer": {
+    "title": "Create your account",
+    "subtitle": "Join Mada Marketplace as a buyer",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone Number",
+    "email": "Email",
+    "optional": "(optional)",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "Register",
+    "submitting": "Registering...",
+    "sellCta": "Want to sell on Mada?",
+    "sellLink": "Register as a Seller",
+    "haveAccount": "Already have an account?",
+    "loginLink": "Login"
+  },
+  "RegisterSeller": {
+    "title": "Become a Seller",
+    "subtitle": "Open your store on Mada Marketplace",
+    "submit": "Create Seller Account",
+    "haveAccount": "Already have an account?",
+    "loginLink": "Login"
+  },
+  "LoginPage": {
+    "title": "Welcome back",
+    "subtitle": "Login to your Mada account",
+    "phone": "Phone Number",
+    "email": "Email",
+    "optional": "(optional)",
+    "password": "Password",
+    "submit": "Login",
+    "submitting": "Logging in...",
+    "noAccount": "Don't have an account?",
+    "registerLink": "Register"
+  },
+  "CreateStore": {
+    "title": "Create your store",
+    "subtitle": "Set up your shop on Mada Marketplace",
+    "name": "Store Name",
+    "description": "Description",
+    "location": "Location",
+    "optional": "(optional)",
+    "submit": "Create Your Store",
+    "submitting": "Creating Your Store..."
   },
   "SellerDashboard": {
     "sidebar": {

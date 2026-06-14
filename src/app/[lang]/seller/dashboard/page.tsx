@@ -14,6 +14,9 @@ import LiveOrders from "@/app/components/seller/dashboard/LiveOrders";
 import TopSellingProducts from "@/app/components/seller/dashboard/TopSellingProducts";
 import RecentOrders from "@/app/components/seller/dashboard/RecentOrders";
 import { RevenueChartWrapper } from "@/app/components/seller/dashboard/RevenueChartWrapper";
+import { getSessionFromCookies } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import db from "@/lib/db";
 
 export default async function SellerDashboard({
   params,
@@ -22,6 +25,16 @@ export default async function SellerDashboard({
 }) {
   const { lang } = await params;
   setRequestLocale(lang);
+
+  const payload = await getSessionFromCookies();
+  if (!payload) redirect("/en/login");
+  if (payload.role !== "SELLER") redirect("/en");
+
+  const sellerStore = await db.store.findFirst({
+    where: { userId: payload.id, status: true },
+  });
+
+  if (!sellerStore) redirect("/en/seller/create-store");
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3 space-y-6">

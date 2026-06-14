@@ -30,21 +30,27 @@ export default async function RecentOrders() {
           <p className="h-4 w-16">{t("action")}</p>
         </div>
 
-        {recentOrdersInfo.map((info) => (
-          <div
-            key={info.id}
-            className="grid grid-cols-5 gap-4 p-4 border-t border-secondary"
-          >
-            <p className="h-4 w-24">{info.items[0].product.name}</p>
-            <p className="h-4 w-16">{info.id}</p>
-            <p className="h-4 w-20">{info.buyer.first_name}</p>
-            <p className="h-4 w-16">{info.status}</p>
-            {/* TODO: popup with call to action */}
-            <button className=" h-6 w-10 bg-primary rounded-md text-white">
-              ...
-            </button>
+        {recentOrdersInfo.length === 0 ? (
+          <div className="p-8 text-center">
+            <p className="text-sm text-text/60">No orders yet</p>
           </div>
-        ))}
+        ) : (
+          recentOrdersInfo.map((info) => (
+            <div
+              key={info.id}
+              className="grid grid-cols-5 gap-4 p-4 border-t border-secondary"
+            >
+              <p className="h-4 w-24">{info.items[0].product.name}</p>
+              <p className="h-4 w-16">{info.id}</p>
+              <p className="h-4 w-20">{info.buyer.first_name}</p>
+              <p className="h-4 w-16">{info.status}</p>
+              {/* TODO: popup with call to action */}
+              <button className="h-6 w-10 bg-primary rounded-md text-white">
+                ...
+              </button>
+            </div>
+          ))
+        )}
       </div>
     </>
   );

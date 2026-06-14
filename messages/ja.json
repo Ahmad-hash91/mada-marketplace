@@ -1,6 +1,56 @@
 {
   "HomePage": {
-    "title": "Madaマーケットプレイスへようこそ"
+    "title": "Madaマーケットプレイスへようこそ",
+    "headline": "地域で売買しよう",
+    "subtext": "Madaはシリア全土の買い手と売り手をつなぐ、シンプルで信頼できるマーケットプレイスです。",
+    "getStarted": "はじめる",
+    "login": "ログイン"
+  },
+  "RegisterBuyer": {
+    "title": "アカウントを作成",
+    "subtitle": "購入者としてMadaマーケットプレイスに参加",
+    "firstName": "名",
+    "lastName": "姓",
+    "phone": "電話番号",
+    "email": "メールアドレス",
+    "optional": "（任意）",
+    "password": "パスワード",
+    "confirmPassword": "パスワード確認",
+    "submit": "登録",
+    "submitting": "登録中...",
+    "sellCta": "Madaで販売したいですか？",
+    "sellLink": "販売者として登録",
+    "haveAccount": "すでにアカウントをお持ちですか？",
+    "loginLink": "ログイン"
+  },
+  "RegisterSeller": {
+    "title": "販売者になる",
+    "subtitle": "Madaマーケットプレイスで店舗を開く",
+    "submit": "販売者アカウントを作成",
+    "haveAccount": "すでにアカウントをお持ちですか？",
+    "loginLink": "ログイン"
+  },
+  "LoginPage": {
+    "title": "おかえりなさい",
+    "subtitle": "Madaアカウントにログイン",
+    "phone": "電話番号",
+    "email": "メールアドレス",
+    "optional": "（任意）",
+    "password": "パスワード",
+    "submit": "ログイン",
+    "submitting": "ログイン中...",
+    "noAccount": "アカウントをお持ちでない方は",
+    "registerLink": "登録"
+  },
+  "CreateStore": {
+    "title": "店舗を作成",
+    "subtitle": "Madaマーケットプレイスで店舗を設定",
+    "name": "店舗名",
+    "description": "説明",
+    "location": "所在地",
+    "optional": "（任意）",
+    "submit": "店舗を作成",
+    "submitting": "店舗を作成中..."
   },
   "SellerDashboard": {
     "sidebar": {
