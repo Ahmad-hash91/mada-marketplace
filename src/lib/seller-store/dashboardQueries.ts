@@ -106,3 +106,37 @@ export async function topSellingProducts(storeId: number) {
     topProducts,
   };
 }
+
+export async function revenueChartQuery(storeId: number) {
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 1);
+  const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const monthlyRevenue = monthNames.map((month) => ({ month, revenue: 0 }));
+  const orders = await db.order.findMany({
+    where: {
+      storeId,
+      status: "DELIVERED",
+      created_at: { gte: startOfYear, lt: endOfYear },
+    },
+    select: { total_amount: true, created_at: true },
+  });
+  for (const order of orders) {
+    const monthIndex = order.created_at.getMonth();
+    monthlyRevenue[monthIndex].revenue += order.total_amount;
+  }
+  return monthlyRevenue;
+}

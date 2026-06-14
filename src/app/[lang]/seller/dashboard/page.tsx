@@ -13,6 +13,7 @@ import TodayPerformance from "@/app/components/seller/dashboard/TodayPerformance
 import LiveOrders from "@/app/components/seller/dashboard/LiveOrders";
 import TopSellingProducts from "@/app/components/seller/dashboard/TopSellingProducts";
 import RecentOrders from "@/app/components/seller/dashboard/RecentOrders";
+import { RevenueChartWrapper } from "@/app/components/seller/dashboard/RevenueChartWrapper";
 
 export default async function SellerDashboard({
   params,
@@ -27,7 +28,9 @@ export default async function SellerDashboard({
         <Suspense fallback={<KPICardsSkeleton />}>
           <KPICards />
         </Suspense>
-        <ChartSkeleton />
+        <Suspense fallback={<ChartSkeleton />}>
+          <RevenueChartWrapper />
+        </Suspense>
 
         <Suspense fallback={<RecentOrdersSkeleton />}>
           <RecentOrders />
