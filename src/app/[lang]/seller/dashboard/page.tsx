@@ -12,6 +12,7 @@ import { KPICards } from "@/app/components/seller/dashboard/KPICards";
 import TodayPerformance from "@/app/components/seller/dashboard/TodayPerformance";
 import LiveOrders from "@/app/components/seller/dashboard/LiveOrders";
 import TopSellingProducts from "@/app/components/seller/dashboard/TopSellingProducts";
+import RecentOrders from "@/app/components/seller/dashboard/RecentOrders";
 
 export default async function SellerDashboard({
   params,
@@ -27,7 +28,10 @@ export default async function SellerDashboard({
           <KPICards />
         </Suspense>
         <ChartSkeleton />
-        <RecentOrdersSkeleton />
+
+        <Suspense fallback={<RecentOrdersSkeleton />}>
+          <RecentOrders />
+        </Suspense>
       </div>
 
       <div className="space-y-6">

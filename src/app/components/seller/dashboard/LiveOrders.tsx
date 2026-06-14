@@ -1,6 +1,6 @@
 import { getSessionFromCookies } from "@/lib/auth";
 import db from "@/lib/db";
-import { liveOrdersQuery } from "@/lib/seller-store/dashboardQueries";
+import { recentOrdersQuery } from "@/lib/seller-store/dashboardQueries";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
@@ -18,7 +18,7 @@ export default async function LiveOrders() {
   const storeId = storeInfo?.id;
   if (!storeId) return null;
 
-  const liveOrders = await liveOrdersQuery(storeId);
+  const liveOrders = await recentOrdersQuery(storeId, 3);
 
   return (
     <div className="border border-secondary rounded-lg p-4 space-y-4 bg-background">
