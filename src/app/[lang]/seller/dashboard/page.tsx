@@ -11,6 +11,7 @@ import { setRequestLocale } from "next-intl/server";
 import { KPICards } from "@/app/components/seller/dashboard/KPICards";
 import TodayPerformance from "@/app/components/seller/dashboard/TodayPerformance";
 import LiveOrders from "@/app/components/seller/dashboard/LiveOrders";
+import TopSellingProducts from "@/app/components/seller/dashboard/TopSellingProducts";
 
 export default async function SellerDashboard({
   params,
@@ -39,8 +40,9 @@ export default async function SellerDashboard({
         <Suspense fallback={<LiveOrdersSkeleton />}>
           <LiveOrders />
         </Suspense>
-
-        <TopSellingSkeleton />
+        <Suspense fallback={<TopSellingSkeleton />}>
+          <TopSellingProducts />
+        </Suspense>
       </div>
     </div>
   );

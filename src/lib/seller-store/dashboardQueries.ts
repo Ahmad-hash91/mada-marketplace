@@ -76,3 +76,33 @@ export async function liveOrdersQuery(storeId: number) {
   });
   return orders;
 }
+
+export async function topSellingProducts(storeId: number) {
+  const orderItems = await db.orderItem.findMany({
+    where: {
+      order: { storeId },
+    },
+    include: { product: true },
+  });
+  const productCounts: Record<
+    number,
+    { product: (typeof orderItems)[0]["product"]; totalQuantity: number }
+  > = {};
+
+  for (const item of orderItems) {
+    if (!productCounts[item.productId]) {
+      productCounts[item.productId] = {
+        product: item.product,
+        totalQuantity: 0,
+      };
+    }
+    productCounts[item.productId].totalQuantity += item.quantity;
+  }
+  const topProducts = Object.values(productCounts)
+    .sort((a, b) => b.totalQuantity - a.totalQuantity)
+    .slice(0, 3);
+
+  return {
+    topProducts,
+  };
+}
