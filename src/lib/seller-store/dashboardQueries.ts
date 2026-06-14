@@ -61,3 +61,18 @@ export async function todaysPerformanceQueries(storeId: number) {
     yesterdayRevenue,
   };
 }
+
+export async function liveOrdersQuery(storeId: number) {
+  const orders = await db.order.findMany({
+    where: { storeId },
+    orderBy: { created_at: "desc" },
+    take: 4,
+    include: {
+      buyer: true,
+      items: {
+        include: { product: true },
+      },
+    },
+  });
+  return orders;
+}
