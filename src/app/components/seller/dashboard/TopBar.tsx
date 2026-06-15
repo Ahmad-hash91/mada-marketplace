@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import SearchInputForm from "./SearchInputForm";
+import { SidebarToggleButton } from "./SidebarToggleButton";
 
 export async function TopBar() {
   const t = await getTranslations("SellerDashboard.topBar");
@@ -25,12 +26,18 @@ export async function TopBar() {
   const imageAlt = sellerInfo?.name;
 
   return (
-    <div className="flex items-center justify-between p-4 border-t border-x rounded-t-2xl border-secondary bg-background">
-      <p className="h-6 w-auto text-text font-semibold">{t("title")}</p>
-
-      <div className="flex items-center gap-3 shrink-0">
+    <div className="flex items-center justify-between gap-3 p-4 border-t border-x rounded-t-2xl border-secondary bg-background">
+      <div className="flex items-center gap-3 min-w-0">
+        <SidebarToggleButton />
+        <p className="text-text hidden lg:block font-semibold shrink-0">
+          {t("title")}
+        </p>
+      </div>
+      <div className="flex-1 justify-center sm:justify-start min-w-0">
         <SearchInputForm />
-        <Bell className="size-5 shrink-0" />
+      </div>
+      <div className="flex items-center gap-3 shrink-0">
+        <Bell className="size-5 hidden md:block shrink-0" />
         {!storeLogo ? (
           <div className="h-8 w-8 shrink-0 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold font-sans">
             {initialLetter}
@@ -45,7 +52,7 @@ export async function TopBar() {
           />
         )}
 
-        <p className="font-semibold text-text">{storeName}</p>
+        <p className="font-semibold hidden lg:block text-text">{storeName}</p>
       </div>
     </div>
   );

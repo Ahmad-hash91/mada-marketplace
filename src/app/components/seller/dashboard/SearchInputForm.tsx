@@ -33,7 +33,7 @@ export default function SearchInputForm() {
       className="w-full max-w-xs font-sans"
     >
       <div
-        className={`flex items-center h-9 w-64 rounded-full border px-4 transition-all ${
+        className={`flex items-center h-9 w-full rounded-full border px-4 transition-all ${
           errors.searchQuery
             ? "border-red-500 bg-red-50/10 focus-within:ring-2 focus-within:ring-red-500/30"
             : "border-secondary bg-secondary/30 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30"

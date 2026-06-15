@@ -46,7 +46,7 @@ export default async function RootDashboardLayout({
         storeSlug={sellerStore.slug}
       />
 
-      <div className="flex-1 flex flex-col overflow-y-auto p-6">
+      <div className="flex-1 flex flex-col overflow-y-auto p-2 lg:p-6">
         <Suspense fallback={<TopBarSkeleton />}>
           <TopBar />
         </Suspense>
