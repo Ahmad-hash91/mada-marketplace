@@ -31,7 +31,7 @@ export function DashboardSideBar({
 
   return (
     <aside
-      className={`h-screen flex flex-col transition-all duration-300 border-e border-secondary bg-background ${
+      className={`h-full flex flex-col transition-all duration-300 border-e border-secondary bg-background ${
         isExpanded ? "w-64" : "w-16"
       }`}
     >
@@ -166,13 +166,6 @@ export function DashboardSideBar({
             </div>
           );
         })}
-        {isExpanded ? (
-          <div className="pt-2 border-t border-secondary w-full">
-            <LanguageSwitcher />
-          </div>
-        ) : (
-          <Globe className="size-5 shrink-0 ltr:mx-2 rtl:mx-2 text-text/50" />
-        )}
       </div>
     </aside>
   );

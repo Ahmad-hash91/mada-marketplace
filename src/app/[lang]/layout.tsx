@@ -5,11 +5,13 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Inter, Noto_Sans_Arabic, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import { Header } from "../components/shared/Header";
 
 export const metadata: Metadata = {
   title: "Mada Marketplace | مدى",
   description: "Syria's Online Marketplace",
 };
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--inter-font",
@@ -39,7 +41,6 @@ export default async function RootLayout({ children, params }: Props) {
   }
 
   setRequestLocale(lang);
-
   const messages = await getMessages();
 
   return (
@@ -51,12 +52,15 @@ export default async function RootLayout({ children, params }: Props) {
             : lang === "ja"
               ? "font-japanese"
               : "font-sans"
-        }`}
+        } bg-background text-text antialiased min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        <Header lang={lang} />
+        <div className="flex-1 pt-16 flex flex-col isolation-auto">
+          <NextIntlClientProvider messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </div>
       </body>
     </html>
   );

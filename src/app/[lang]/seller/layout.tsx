@@ -36,19 +36,22 @@ export default async function RootDashboardLayout({
   });
 
   if (!sellerStore) {
-    return <div className="min-h-screen">{children}</div>;
+    return <div className="h-[calc(100vh-4rem)]">{children}</div>;
   }
+
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-[calc(100vh-4rem)] overflow-hidden bg-background">
       <DashboardSideBar
         storeName={sellerStore.name}
         storeSlug={sellerStore.slug}
       />
-      <div className="flex-1 flex flex-col overflow-y-auto p-6 ">
+
+      <div className="flex-1 flex flex-col overflow-y-auto p-6">
         <Suspense fallback={<TopBarSkeleton />}>
           <TopBar />
         </Suspense>
-        <main className="flex-1 p-6 border border-gray-200 rounded-b-2xl">
+
+        <main className="flex-1 p-6 border border-primary/10 rounded-b-2xl bg-background shadow-sm">
           {children}
         </main>
       </div>

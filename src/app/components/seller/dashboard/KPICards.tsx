@@ -20,24 +20,26 @@ export async function KPICards() {
     await KPIQueries(storeId);
 
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <div className="border border-secondary rounded-lg p-4 space-y-2 bg-background">
         <p className="text-sm text-text/60">{t("totalRevenue")}</p>
-        <p className="text-2xl font-bold text-text">
+        <p className="text-md lg:text-2xl font-bold text-text">
           ${totalRevenue.toFixed(2)}
         </p>
       </div>
       <div className="border border-secondary rounded-lg p-4 space-y-2 bg-background">
         <p className="text-sm text-text/60">{t("totalOrders")}</p>
-        <p className="text-2xl font-bold text-text">{totalOrders}</p>
+        <p className="text-md lg:text-2xl font-bold text-text">{totalOrders}</p>
       </div>
       <div className="border border-secondary rounded-lg p-4 space-y-2 bg-background">
         <p className="text-sm text-text/60">{t("totalCustomers")}</p>
-        <p className="text-2xl font-bold text-text">{totalCustomers}</p>
+        <p className="text-md lg:text-2xl font-bold text-text">
+          {totalCustomers}
+        </p>
       </div>
       <div className="border border-secondary rounded-lg p-4 space-y-2 bg-background">
         <p className="text-sm text-text/60">{t("conversionRate")}</p>
-        <p className="text-2xl font-bold text-text">
+        <p className="text-md lg:text-2xl font-bold text-text">
           {conversionRate.toFixed(1)}%
         </p>
       </div>
