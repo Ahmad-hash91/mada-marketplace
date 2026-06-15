@@ -34,7 +34,7 @@ export default async function TodayPerformance() {
       </div>
 
       <div className="space-y-1">
-        <p className="text-2xl font-bold text-text">
+        <p className="text-md lg:text-2xl font-bold text-text">
           ${todayRevenue.toFixed(2)}
         </p>
         <p className="text-sm text-text/60">{t("todaysRevenue")}</p>

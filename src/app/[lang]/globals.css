@@ -10,4 +10,6 @@
   --font-sans: var(--inter-font), sans-serif;
   --font-arabic: var(--noto-arabic-font), sans-serif;
   --font-japanese: var(--noto-jp-font), sans-serif;
+
+  --breakpoint-xs: 320px;
 }
