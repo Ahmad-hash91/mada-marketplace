@@ -1,11 +1,20 @@
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "no-store, must-revalidate"
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/(en|ar|ja)/(login|register)(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
         }
       ]
     }
