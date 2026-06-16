@@ -1,16 +1,23 @@
 import { getSessionFromCookies } from "@/lib/auth";
 import db from "@/lib/db";
 import { todaysPerformanceQueries } from "@/lib/seller-store/dashboardQueries";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function TodayPerformance() {
+type TodayPerformanceProps = {
+  params: Promise<{ lang: string }>;
+};
+
+export default async function TodayPerformance({
+  params,
+}: TodayPerformanceProps) {
   const t = await getTranslations("SellerDashboard.todayPerformance");
   const payload = await getSessionFromCookies();
-
-  if (!payload) redirect("/en/login");
-  if (payload.role !== "SELLER") redirect("/en");
+  const { lang } = await params;
+  setRequestLocale(lang);
+  if (!payload) redirect(`/${lang}/login`);
+  if (payload.role !== "SELLER") redirect(`/${lang}`);
 
   const storeInfo = await db.store.findFirst({
     where: { userId: payload.id, status: true },
@@ -26,7 +33,7 @@ export default async function TodayPerformance() {
       <div className="flex justify-between items-center">
         <p className="font-semibold text-text">{t("title")}</p>
         <Link
-          href="/en/seller/store-performance"
+          href={`/${lang}/seller/store-performance`}
           className="text-sm text-primary hover:underline"
         >
           {t("details")}

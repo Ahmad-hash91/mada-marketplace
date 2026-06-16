@@ -3,7 +3,7 @@
 import { CreateStore, sellerStoreSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
@@ -12,7 +12,8 @@ export default function CreateSellerStore() {
   const t = useTranslations("CreateStore");
   const [serverError, setServerError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
+  const pathname = usePathname();
+  const lang = pathname.split("/")[1] || "en";
   const {
     register,
     handleSubmit,
@@ -35,7 +36,7 @@ export default function CreateSellerStore() {
         setServerError(result.error || "Something went wrong.");
         return;
       }
-      router.push("/en/seller/dashboard");
+      router.push(`/${lang}/seller/dashboard`);
       router.refresh();
     } catch {
       setServerError("Something went wrong. Please try again.");

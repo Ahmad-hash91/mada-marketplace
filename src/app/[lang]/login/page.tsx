@@ -1,7 +1,7 @@
 "use client";
 import { loginSchema, type LoginInput } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
@@ -12,6 +12,8 @@ export default function LoginPage() {
   const [serverError, setServerError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const lang = pathname.split("/")[1] || "en";
   const {
     register,
     handleSubmit,
@@ -35,11 +37,11 @@ export default function LoginPage() {
         return;
       }
       if (result.role === "SELLER") {
-        router.push("/en/seller/dashboard");
+        router.push(`/${lang}/seller/dashboard`);
       } else if (result.role === "ADMIN") {
-        router.push("/en/admin/dashboard");
+        router.push(`/${lang}/admin/dashboard`);
       } else {
-        router.push("/en");
+        router.push(`/${lang}`);
       }
     } catch {
       setServerError("Something went wrong. Please try again.");
@@ -126,7 +128,7 @@ export default function LoginPage() {
           <p className="text-text/70">
             {t("noAccount")}{" "}
             <Link
-              href="/en/register"
+              href={`/${lang}/register`}
               className="text-primary font-medium hover:underline"
             >
               {t("registerLink")}

@@ -4,15 +4,21 @@ import {
   KPIQueries,
   topSellingProducts,
 } from "@/lib/seller-store/dashboardQueries";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
-export default async function TopSellingProducts() {
+type TopSellingProductsProps = {
+  params: Promise<{ lang: string }>;
+};
+export default async function TopSellingProducts({
+  params,
+}: TopSellingProductsProps) {
   const t = await getTranslations("SellerDashboard.topSelling");
+  const { lang } = await params;
+  setRequestLocale(lang);
   const payload = await getSessionFromCookies();
-
-  if (!payload) redirect("/en/login");
-  if (payload.role !== "SELLER") redirect("/en");
+  if (!payload) redirect(`/${lang}/login`);
+  if (payload.role !== "SELLER") redirect(`/${lang}`);
 
   const storeInfo = await db.store.findFirst({
     where: { userId: payload.id, status: true },

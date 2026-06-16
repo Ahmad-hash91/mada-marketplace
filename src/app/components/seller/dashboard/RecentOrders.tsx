@@ -1,15 +1,21 @@
 import { getSessionFromCookies } from "@/lib/auth";
 import db from "@/lib/db";
 import { recentOrdersQuery } from "@/lib/seller-store/dashboardQueries";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
-export default async function RecentOrders() {
+type RecentOrdersProps = {
+  params: Promise<{ lang: string }>;
+};
+
+export default async function RecentOrders({ params }: RecentOrdersProps) {
   const t = await getTranslations("SellerDashboard.recentOrders");
   const payload = await getSessionFromCookies();
+  const { lang } = await params;
+  setRequestLocale(lang);
 
-  if (!payload) redirect("/en/login");
-  if (payload.role !== "SELLER") redirect("/en");
+  if (!payload) redirect(`/${lang}/login`);
+  if (payload.role !== "SELLER") redirect(`/${lang}`);
 
   const storeInfo = await db.store.findFirst({
     where: { userId: payload.id, status: true },
