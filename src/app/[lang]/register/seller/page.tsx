@@ -3,7 +3,7 @@
 import { userAuthSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod/v4";
 import Link from "next/link";
@@ -21,7 +21,8 @@ export default function RegisterSeller() {
   const tBuyer = useTranslations("RegisterBuyer");
   const [serverError, setServerError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
+  const pathname = usePathname();
+  const lang = pathname.split("/")[1] || "en";
   const {
     register,
     handleSubmit,
@@ -50,7 +51,7 @@ export default function RegisterSeller() {
         setServerError(result.error || "Something went wrong.");
         return;
       }
-      router.push("/en/seller/dashboard");
+      router.push(`/${lang}/seller/dashboard`);
     } catch {
       setServerError("Something went wrong. Please try again.");
     } finally {
@@ -199,7 +200,7 @@ export default function RegisterSeller() {
           <p className="text-text/70">
             {t("haveAccount")}{" "}
             <Link
-              href="/en/login"
+              href={`/${lang}/login`}
               className="text-primary font-medium hover:underline"
             >
               {t("loginLink")}

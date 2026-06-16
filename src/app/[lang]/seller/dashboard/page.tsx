@@ -27,41 +27,41 @@ export default async function SellerDashboard({
   setRequestLocale(lang);
 
   const payload = await getSessionFromCookies();
-  if (!payload) redirect("/en/login");
-  if (payload.role !== "SELLER") redirect("/en");
+  if (!payload) redirect(`/${lang}/login`);
+  if (payload.role !== "SELLER") redirect(`/${lang}`);
 
   const sellerStore = await db.store.findFirst({
     where: { userId: payload.id, status: true },
   });
 
-  if (!sellerStore) redirect("/en/seller/create-store");
+  if (!sellerStore) redirect(`/${lang}/seller/create-store`);
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3 space-y-6">
         <Suspense fallback={<KPICardsSkeleton />}>
-          <KPICards />
+          <KPICards params={params} />
         </Suspense>
         <Suspense fallback={<ChartSkeleton />}>
-          <RevenueChartWrapper />
+          <RevenueChartWrapper params={params} />
         </Suspense>
 
         <Suspense fallback={<RecentOrdersSkeleton />}>
-          <RecentOrders />
+          <RecentOrders params={params} />
         </Suspense>
       </div>
 
       <div className="space-y-6">
         <Suspense fallback={<AddProductSkeleton />}>
-          <AddProductCard />
+          <AddProductCard params={params} />
         </Suspense>
         <Suspense fallback={<TodayPerformanceSkeleton />}>
-          <TodayPerformance />
+          <TodayPerformance params={params} />
         </Suspense>
         <Suspense fallback={<LiveOrdersSkeleton />}>
-          <LiveOrders />
+          <LiveOrders params={params} />
         </Suspense>
         <Suspense fallback={<TopSellingSkeleton />}>
-          <TopSellingProducts />
+          <TopSellingProducts params={params} />
         </Suspense>
       </div>
     </div>

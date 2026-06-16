@@ -1,17 +1,23 @@
 import { getSessionFromCookies } from "@/lib/auth";
 import db from "@/lib/db";
 import { Bell } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import SearchInputForm from "./SearchInputForm";
 import { SidebarToggleButton } from "./SidebarToggleButton";
 
-export async function TopBar() {
+type TopBarProps = {
+  params: Promise<{ lang: string }>;
+};
+export async function TopBar({ params }: TopBarProps) {
   const t = await getTranslations("SellerDashboard.topBar");
   const payload = await getSessionFromCookies();
-  if (!payload) redirect("/en/login");
-  if (payload.role !== "SELLER") redirect("/en");
+
+  const { lang } = await params;
+  setRequestLocale(lang);
+  if (!payload) redirect(`/${lang}/login`);
+  if (payload.role !== "SELLER") redirect(`/${lang}`);
 
   const sellerInfo = await db.store.findFirst({
     where: {

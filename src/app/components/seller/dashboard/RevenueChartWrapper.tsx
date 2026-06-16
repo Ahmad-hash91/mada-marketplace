@@ -2,16 +2,23 @@
 import { getSessionFromCookies } from "@/lib/auth";
 import db from "@/lib/db";
 import { revenueChartQuery } from "@/lib/seller-store/dashboardQueries";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 import { RevenueChart } from "./RevenueChart";
 
-export async function RevenueChartWrapper() {
+type RevenueChartWrapperProps = {
+  params: Promise<{ lang: string }>;
+};
+
+export async function RevenueChartWrapper({
+  params,
+}: RevenueChartWrapperProps) {
   const t = await getTranslations("SellerDashboard.chart");
   const payload = await getSessionFromCookies();
-
-  if (!payload) redirect("/en/login");
-  if (payload.role !== "SELLER") redirect("/en");
+  const { lang } = await params;
+  setRequestLocale(lang);
+  if (!payload) redirect(`/${lang}/login`);
+  if (payload.role !== "SELLER") redirect(`/${lang}`);
 
   const storeInfo = await db.store.findFirst({
     where: { userId: payload.id, status: true },

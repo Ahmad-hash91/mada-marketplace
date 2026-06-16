@@ -25,8 +25,8 @@ export default async function RootDashboardLayout({
   const { lang } = await params;
   setRequestLocale(lang);
   const payload = await getSessionFromCookies();
-  if (!payload) redirect("/en/login");
-  if (payload.role !== "SELLER") redirect("/en");
+  if (!payload) redirect(`/${lang}/login`);
+  if (payload.role !== "SELLER") redirect(`/${lang}`);
 
   const sellerStore = await db.store.findFirst({
     where: {
@@ -48,7 +48,7 @@ export default async function RootDashboardLayout({
 
       <div className="flex-1 flex flex-col overflow-y-auto p-2 lg:p-6">
         <Suspense fallback={<TopBarSkeleton />}>
-          <TopBar />
+          <TopBar params={params} />
         </Suspense>
 
         <main className="flex-1 p-6 border border-primary/10 rounded-b-2xl bg-background shadow-sm">

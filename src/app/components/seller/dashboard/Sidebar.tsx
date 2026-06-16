@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { sideBarNavItems, sideBarSettingsItems } from "./SideBarData";
+import { getSideBarNavItems, getSideBarSettingsItems } from "./SideBarData";
 import { useState } from "react";
 import {
   PanelLeftClose,
@@ -27,8 +27,11 @@ export function DashboardSideBar({
   const pathname = usePathname();
   const t = useTranslations("SellerDashboard.sidebar");
   const { isOpen, close } = useMobileSidebarStore();
-
+  const lang = pathname.split("/")[1] || "en";
   const pathWithoutLocale = pathname.replace(/^\/(en|ar|ja)/, "");
+
+  const sideBarNavItems = getSideBarNavItems(lang);
+  const sideBarSettingsItems = getSideBarSettingsItems(lang);
 
   return (
     <>
@@ -97,7 +100,7 @@ export function DashboardSideBar({
             );
           })}
           <Link
-            href={`/en/stores/${storeSlug}`}
+            href={`/${lang}/stores/${storeSlug}`}
             title={t("StorePage")}
             onClick={close}
             className="flex items-center gap-4 p-2 rounded transition-colors text-text/70 hover:bg-secondary/40"
