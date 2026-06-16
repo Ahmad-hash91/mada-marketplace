@@ -20,7 +20,7 @@ function decodeTokenHandler(token: string) {
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value;
   const payload = token ? decodeTokenHandler(token) : null;
-
+  console.log("MIDDLEWARE:", request.nextUrl.pathname);
   if (payload && payload.exp * 1000 < Date.now()) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
