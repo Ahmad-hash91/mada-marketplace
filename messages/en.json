@@ -104,5 +104,17 @@
     "chart": {
       "title": "Revenue Overview"
     }
+  },
+  "SellerProducts": {
+    "title": "Products",
+    "all": "All",
+    "active": "Active",
+    "inactive": "Inactive",
+    "product": "Product",
+    "status": "Status",
+    "inventory": "Inventory",
+    "description": "Description",
+    "noProducts": "No products found",
+    "addProduct": "Add Product"
   }
 }

@@ -104,5 +104,17 @@
     "chart": {
       "title": "売上概要"
     }
+  },
+  "SellerProducts": {
+    "title": "商品",
+    "all": "すべて",
+    "active": "公開中",
+    "inactive": "非公開",
+    "product": "商品",
+    "status": "状態",
+    "inventory": "在庫",
+    "description": "説明",
+    "noProducts": "商品が見つかりません",
+    "addProduct": "商品を追加"
   }
 }
