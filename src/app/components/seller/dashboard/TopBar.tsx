@@ -6,6 +6,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import SearchInputForm from "./SearchInputForm";
 import { SidebarToggleButton } from "./SidebarToggleButton";
+import Link from "next/link";
 
 type TopBarProps = {
   params: Promise<{ lang: string }>;
@@ -35,9 +36,12 @@ export async function TopBar({ params }: TopBarProps) {
     <div className="flex items-center justify-between gap-3 p-4 border-t border-x rounded-t-2xl border-secondary bg-background">
       <div className="flex items-center gap-3 min-w-0">
         <SidebarToggleButton />
-        <p className="text-text hidden lg:block font-semibold shrink-0">
+        <Link
+          href={`/${lang}/seller/dashboard`}
+          className="text-text hidden lg:block font-semibold shrink-0 hover:text-primary transition-colors"
+        >
           {t("title")}
-        </p>
+        </Link>
       </div>
       <div className="flex-1 justify-center sm:justify-start min-w-0">
         <SearchInputForm />

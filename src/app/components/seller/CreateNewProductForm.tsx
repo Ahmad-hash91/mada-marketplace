@@ -1,35 +1,57 @@
 "use client";
 
-import {
-  type sellerStoreSchemaProps,
-  sellerStoreSchema,
-} from "@/lib/validators";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  addNewProductSchema,
+  type addNewProductSchemaProps,
+} from "@/lib/seller-store/products";
 
-export default function CreateSellerStore() {
-  const router = useRouter();
-  const t = useTranslations("CreateStore");
+type Category = {
+  name: string;
+  id: number;
+  slug: string;
+  created_at: Date;
+  name_ar: string | null;
+  name_ja: string | null;
+};
+
+type CreateNewProductFormProps = {
+  categories: Category[];
+  lang: string;
+};
+
+export default function CreateNewProductForm({
+  categories,
+  lang,
+}: CreateNewProductFormProps) {
   const [serverError, setServerError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const pathname = usePathname();
-  const lang = pathname.split("/")[1] || "en";
+  const router = useRouter();
+  const t = useTranslations("AddProduct");
+
   const {
-    register,
     handleSubmit,
+    register,
     formState: { errors },
-  } = useForm<sellerStoreSchemaProps>({
-    resolver: zodResolver(sellerStoreSchema),
+  } = useForm<addNewProductSchemaProps>({
+    resolver: zodResolver(addNewProductSchema),
   });
 
-  const onSubmit = async (data: sellerStoreSchemaProps) => {
+  const getCategoryName = (category: Category) => {
+    if (lang === "ar") return category.name_ar ?? category.name;
+    if (lang === "ja") return category.name_ja ?? category.name;
+    return category.name;
+  };
+
+  const onSubmit = async (data: addNewProductSchemaProps) => {
     setLoading(true);
     setServerError("");
     try {
-      const response = await fetch("/api/stores", {
+      const response = await fetch("/api/products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data }),
@@ -101,19 +123,67 @@ export default function CreateSellerStore() {
             )}
           </div>
 
+          <div className="flex gap-4">
+            <div className="flex-1 flex flex-col gap-1">
+              <label htmlFor="price" className="text-sm font-medium text-text">
+                {t("price")}
+              </label>
+              <input
+                {...register("price", { valueAsNumber: true })}
+                id="price"
+                type="number"
+                step="0.01"
+                min="0"
+                className={inputClass(!!errors.price)}
+              />
+              {errors.price && (
+                <p className="text-xs text-red-500">{errors.price.message}</p>
+              )}
+            </div>
+
+            <div className="flex-1 flex flex-col gap-1">
+              <label htmlFor="stock" className="text-sm font-medium text-text">
+                {t("stock")}
+              </label>
+              <input
+                {...register("stock", { valueAsNumber: true })}
+                id="stock"
+                type="number"
+                min="0"
+                className={inputClass(!!errors.stock)}
+              />
+              {errors.stock && (
+                <p className="text-xs text-red-500">{errors.stock.message}</p>
+              )}
+            </div>
+          </div>
+
           <div className="flex flex-col gap-1">
-            <label htmlFor="location" className="text-sm font-medium text-text">
-              {t("location")}{" "}
-              <span className="text-text/40">{t("optional")}</span>
+            <label
+              htmlFor="categoryId"
+              className="text-sm font-medium text-text"
+            >
+              {t("categories")}
             </label>
-            <input
-              {...register("location")}
-              id="location"
-              type="text"
-              className={inputClass(!!errors.location)}
-            />
-            {errors.location && (
-              <p className="text-xs text-red-500">{errors.location.message}</p>
+            <select
+              {...register("categoryId", { valueAsNumber: true })}
+              id="categoryId"
+              defaultValue=""
+              className={inputClass(!!errors.categoryId)}
+            >
+              <option value="" disabled>
+                {t("categories")}
+              </option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {getCategoryName(category)}
+                </option>
+              ))}
+            </select>
+            {errors.categoryId && (
+              <p className="text-xs text-red-500">
+                {errors.categoryId.message}
+              </p>
             )}
           </div>
 

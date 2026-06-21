@@ -10,14 +10,14 @@ const japanLocalRegex = /^0[789]0\d{8}$/;
 
 const passwordSchema = z
   .string()
-  .min(8, { message: "Password must be at least 8 characters long." })
+  .min(8, { error: "Password must be at least 8 characters long." })
   .regex(/[A-Z]/, {
-    message: "Password must contain at least one uppercase letter.",
+    error: "Password must contain at least one uppercase letter.",
   })
   .regex(/[a-z]/, {
-    message: "Password must contain at least one lowercase letter.",
+    error: "Password must contain at least one lowercase letter.",
   })
-  .regex(/[0-9]/, { message: "Password must contain at least one number." });
+  .regex(/[0-9]/, { error: "Password must contain at least one number." });
 
 const phoneSchema = z
   .string()
@@ -30,7 +30,7 @@ const phoneSchema = z
       japanIntlRegex.test(val) ||
       japanLocalRegex.test(val),
     {
-      message: "Must be a valid Syrian (+963) or Japanese (+81) mobile number.",
+      error: "Must be a valid Syrian (+963) or Japanese (+81) mobile number.",
     },
   )
   .transform((val) => {
@@ -48,17 +48,17 @@ const emailSchema = z
   .toLowerCase()
   .optional()
   .refine((val) => !val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-    message: "Invalid email address format.",
+    error: "Invalid email address format.",
   });
 export const userAuthSchema = z.object({
   first_name: z
     .string()
-    .min(2, { message: "First Name must be at least 2 characters long." })
-    .max(50, { message: "First Name cannot exceed 50 characters." }),
+    .min(2, { error: "First Name must be at least 2 characters long." })
+    .max(50, { error: "First Name cannot exceed 50 characters." }),
   last_name: z
     .string()
-    .min(2, { message: "Last Name must be at least 2 characters long." })
-    .max(50, { message: "Last Name cannot exceed 50 characters." }),
+    .min(2, { error: "Last Name must be at least 2 characters long." })
+    .max(50, { error: "Last Name cannot exceed 50 characters." }),
   email: emailSchema,
   phone: phoneSchema,
   password: passwordSchema,
@@ -74,11 +74,11 @@ export const loginSchema = z.object({
 export const sellerStoreSchema = z.object({
   name: z
     .string()
-    .min(2, { message: "Store name must be at least 2 characters long." })
-    .max(50, { message: "Store name cannot exceed 50 characters." }),
+    .min(2, { error: "Store name must be at least 2 characters long." })
+    .max(50, { error: "Store name cannot exceed 50 characters." }),
   description: z.string().optional(),
   location: z.string().optional(),
 });
-export type CreateStore = z.infer<typeof sellerStoreSchema>;
-export type UserAuthInput = z.infer<typeof userAuthSchema>;
-export type LoginInput = z.infer<typeof loginSchema>;
+export type sellerStoreSchemaProps = z.infer<typeof sellerStoreSchema>;
+export type UserAuthSchemaProps = z.infer<typeof userAuthSchema>;
+export type LoginSchemaProps = z.infer<typeof loginSchema>;

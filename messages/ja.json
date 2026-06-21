@@ -104,5 +104,29 @@
     "chart": {
       "title": "売上概要"
     }
+  },
+  "SellerProducts": {
+    "title": "商品",
+    "all": "すべて",
+    "active": "公開中",
+    "inactive": "非公開",
+    "product": "商品",
+    "status": "状態",
+    "inventory": "在庫",
+    "description": "説明",
+    "noProducts": "商品が見つかりません",
+    "addProduct": "商品を追加"
+  },
+  "AddProduct": {
+    "title": "新しい商品を追加",
+    "subtitle": "店舗に新しい商品を登録",
+    "name": "商品名",
+    "description": "説明",
+    "optional": "（任意）",
+    "price": "価格",
+    "stock": "在庫",
+    "categories": "カテゴリー",
+    "submit": "商品を追加",
+    "submitting": "追加中..."
   }
 }

@@ -89,6 +89,7 @@ model Category{
   id          Int       @id @default(autoincrement())
   name        String
   name_ar     String?
+  name_ja     String?
   slug        String    @unique
   products    Product[]
   created_at  DateTime  @default(now())
