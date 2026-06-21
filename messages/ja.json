@@ -116,5 +116,17 @@
     "description": "説明",
     "noProducts": "商品が見つかりません",
     "addProduct": "商品を追加"
+  },
+  "AddProduct": {
+    "title": "新しい商品を追加",
+    "subtitle": "店舗に新しい商品を登録",
+    "name": "商品名",
+    "description": "説明",
+    "optional": "（任意）",
+    "price": "価格",
+    "stock": "在庫",
+    "categories": "カテゴリー",
+    "submit": "商品を追加",
+    "submitting": "追加中..."
   }
 }

@@ -116,5 +116,17 @@
     "description": "Description",
     "noProducts": "No products found",
     "addProduct": "Add Product"
+  },
+  "AddProduct": {
+    "title": "Add New Product",
+    "subtitle": "List a new item in your store",
+    "name": "Product Name",
+    "description": "Description",
+    "optional": "(optional)",
+    "price": "Price",
+    "stock": "Stock",
+    "categories": "Category",
+    "submit": "Add Product",
+    "submitting": "Adding Product..."
   }
 }

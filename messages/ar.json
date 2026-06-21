@@ -116,5 +116,17 @@
     "description": "الوصف",
     "noProducts": "لا توجد منتجات",
     "addProduct": "إضافة منتج"
+  },
+  "AddProduct": {
+    "title": "إضافة منتج جديد",
+    "subtitle": "أضف منتجاً جديداً إلى متجرك",
+    "name": "اسم المنتج",
+    "description": "الوصف",
+    "optional": "(اختياري)",
+    "price": "السعر",
+    "stock": "المخزون",
+    "categories": "الفئة",
+    "submit": "إضافة المنتج",
+    "submitting": "جاري إضافة المنتج..."
   }
 }
