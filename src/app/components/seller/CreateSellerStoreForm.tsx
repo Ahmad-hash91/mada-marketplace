@@ -1,6 +1,9 @@
 "use client";
 
-import { CreateStore, sellerStoreSchema } from "@/lib/validators";
+import {
+  type sellerStoreSchemaProps,
+  sellerStoreSchema,
+} from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { usePathname, useRouter } from "next/navigation";
@@ -18,11 +21,11 @@ export default function CreateSellerStore() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateStore>({
+  } = useForm<sellerStoreSchemaProps>({
     resolver: zodResolver(sellerStoreSchema),
   });
 
-  const onSubmit = async (data: CreateStore) => {
+  const onSubmit = async (data: sellerStoreSchemaProps) => {
     setLoading(true);
     setServerError("");
     try {

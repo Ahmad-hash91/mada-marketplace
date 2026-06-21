@@ -1,5 +1,5 @@
 "use client";
-import { loginSchema, type LoginInput } from "@/lib/validators";
+import { loginSchema, type LoginSchemaProps } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,11 +18,11 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInput>({
+  } = useForm<LoginSchemaProps>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginInput) => {
+  const onSubmit = async (data: LoginSchemaProps) => {
     setLoading(true);
     setServerError("");
     try {

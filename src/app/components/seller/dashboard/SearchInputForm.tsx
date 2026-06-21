@@ -1,7 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
 import {
-  type SellerSearchInput,
+  type inputSearchSchemaProps,
   inputSearchSchema,
 } from "@/lib/seller-store/storeValidator";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,7 +14,7 @@ export default function SearchInputForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SellerSearchInput>({
+  } = useForm<inputSearchSchemaProps>({
     resolver: zodResolver(inputSearchSchema),
   });
   const t = useTranslations("SellerDashboard.topBar");
@@ -22,7 +22,7 @@ export default function SearchInputForm() {
   const pathname = usePathname();
   const lang = pathname.split("/")[1];
 
-  const onSearchHandler = (data: SellerSearchInput) => {
+  const onSearchHandler = (data: inputSearchSchemaProps) => {
     if (!data.searchQuery.trim()) return;
     router.push(`/${lang}/seller/products?search=${data.searchQuery}`);
   };
