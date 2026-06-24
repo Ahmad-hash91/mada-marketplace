@@ -110,6 +110,14 @@ export default async function SellerProducts({
                   <td className="p-4 text-text/60 truncate max-w-xs">
                     {item.description || "—"}
                   </td>
+                  <td className="p-4 text-text/80">
+                    <Link
+                      href={`/${lang}/seller/products/${item.id}`}
+                      className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                    >
+                      Edit
+                    </Link>
+                  </td>
                 </tr>
               ))
             )}
